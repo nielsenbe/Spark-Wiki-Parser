@@ -46,3 +46,27 @@ Article
 We call this the simplified syntax tree or simple tree for short.
 
 Once the simple tree has been generated it is easy to save it to the desired format.  The framework's default persistance method is Parquet, but many others will work.
+
+## Source
+This application reads data from the MediaWiki xml dump files.  These are BZ2 compressed XML files.  Wikipedia is the largest (~ 13 GB compressed).  They also break the files into 50 smaller parts (useful for testing).  
+Main site:
+
+[Wikimedia Downloads](https://dumps.wikimedia.org/backup-index.html)
+
+[Mirrors](https://dumps.wikimedia.org/mirrors.html)
+
+* enwiki = English Wikipedia
+ * enwiki-[date]-pages-articles.xml.bz2 = Full backup
+ * enwiki-[date]-pages-articles1.xml-p[id].bz2 = Full backup divided into 50 pieces
+
+All the notebooks use Databrick's XML source to parse the file.  Other methods are available, but this method has been tested and validated.
+[Databrick's XML](https://github.com/databricks/spark-xml)
+
+## Caveats and known limitations
+* Parser only works with english
+  * Other languages will parse, but columns such as Main Article might not work.
+* Parser only works with current edit
+  * Backups with all history are available, but they will not work with current version.
+* Sweble parser doesn't always pick up items nested in <ref>
+  * Right now this can be fixed by reparsing the nested next.  However, this is resource intensive and is turned off by default.
+
