@@ -8,9 +8,10 @@ Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting 
 * Provide Apache Zeppelin notebooks (for Azure HDInsight and AWS EMR) to minimize the hassle.
 
 ## Requirements
-* An Apache Spark cluster 
+* Apache Spark cluster 
   * Version 2.0+ (Parser will work with older versions, but all the notebooks are configured for 2.0+)
   * Preferably 40+ cores and 150+ GB RAM
+  * This application will work in local / single node clusters, but may not be performant.
 * Apache Zeppelin
   * Only needed if the notebooks are being utilized.
 
