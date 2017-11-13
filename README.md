@@ -2,10 +2,10 @@
 Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting MediaWiki dumps (Wikipedia, Wiktionary, Wikidata).  It uses the Sweble parser to do the initial syntax tree generation.  The app then cleans, enriches, and condenses the tree down to a flattened format.  From there it can be exported to JSON, CSV, Parquet, etc.
 
 ## Project Goals
-..* Grant researchers easy access to the data stored in the MediaWiki family.
-..* Focus on content and semantics over formatting and syntax.
-..* Take advantage of Spark's built in data import and export functionality.
-..* Provide Apache Zeppelin notebooks (for Azure HDInsight and AWS EMR) to minimize the hassle.
+* Grant researchers easy access to the data stored in the MediaWiki family.
+* Focus on content and semantics over formatting and syntax.
+* Take advantage of Spark's built in data import and export functionality.
+* Provide Apache Zeppelin notebooks (for Azure HDInsight and AWS EMR) to minimize the hassle.
 
 ## Requirements
 * An Apache Spark cluster 
@@ -19,27 +19,28 @@ Spark-Wiki-Parser is a framework for researchers who want to use Apache Spark to
 * Wikipedia
 * Wiktionary (Future)
 * Wikidata (Future)
+
 This framework does not contain code for the raw parsing of the Wiki markup.  Rather it acts as a wrapper for the Sweble parser.  Sweble produces a rather deep and complex abstract syntax tree.  Most of the code in this project revolves around taking that syntax tree and flattening, cleaning, and enriching it.  For example an ordinary wiki link:
 
 WtPage
 
-..WtSection
+-- WtSection
 
-...WtBody
+--- WtBody
 
-....WtInternalLink
+---- WtInternalLink
 
-.....WtPageName
+----- WtPageName
 
-......WtText (Destination)
+------ WtText (Destination)
 
-.....WtLinkTitle
+----- WtLinkTitle
 
 Our framework condenses it down to:
 
 Article
 
-..Link(destination, text, linkType, subType, pageBookmark)
+-- Link(destination, text, linkType, subType, pageBookmark)
 
 We call this the simplified syntax tree or simple tree for short.
 
