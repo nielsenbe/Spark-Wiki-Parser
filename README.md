@@ -1,3 +1,5 @@
+(WARNING APP IS IN EXTREME EARLY ALPHA)
+
 # Spark-Wiki-Parser
 Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting MediaWiki dumps (Wikipedia, Wiktionary, Wikidata).  It uses the Sweble parser to do the initial syntax tree generation.  The app then cleans, enriches, and condenses the tree down to a flattened format.  From there it can be exported to JSON, CSV, Parquet, etc.
 
