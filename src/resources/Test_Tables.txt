@@ -1,0 +1,11 @@
+{| class="wikitable" style="float:right; margin:10px"
+|+ TABLE HEADER
+|-
+! HEADER 1
+! HEADER<br>2
+|-
+|CellContents1
+|{{Template in Cell}}
+|-
+| CellContents1 || [[Link in Cell]]
+|}
