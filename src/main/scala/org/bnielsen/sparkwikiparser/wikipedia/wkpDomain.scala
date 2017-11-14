@@ -18,11 +18,11 @@ package main.scala.org.bnielsen.sparkwikiparser.wikipedia
   * format.  The high level structure:
   * Article
   * * Header Section
-  * * * Text
-  * * * Template
-  * * * Link
-  * * * Tag
-  * * * Table
+  * * Text
+  * * Template
+  * * Link
+  * * Tag
+  * * Table
   */
 
 /** Common type for the wikipedia nodes

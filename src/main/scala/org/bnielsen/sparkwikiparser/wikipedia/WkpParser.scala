@@ -40,12 +40,12 @@ import scala.util.Try
 
 object WkpParser {
 
-  /** Converts xml class to a shallow abstract tree object
+  /** Converts xml class to a simple abstract tree object
     *
     * @param input case class representation of xml element
     * @return WikipediaArticle
     */
-  def parseWikiText(input: InputPage, config: ParserConfiguration): WikipediaArticle = {
+  def parseWikiText(input: InputPage, config: WkpParserConfiguration): WikipediaArticle = {
 
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")

@@ -7,9 +7,8 @@ import scala.io.Source
 object LocalTest {
   def main (arg: Array[String]): Unit = {
 
-    //Source.fromFile("D:\\CodeProjects\\Wiki\\Albedo.txt").mkString,
     val wikiText = InputWikiText(
-      Source.fromFile("D:\\CodeProjects\\Wiki\\Albedo.txt").mkString,
+      Source.fromFile("src\\resources\\Test_Actual.txt").mkString,
       "preserve")
 
 
@@ -28,9 +27,9 @@ object LocalTest {
       "Albedo",
       revision)
 
-    val config = ParserConfiguration.getConfiguration
+
     val t0 = System.nanoTime()
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWikiText(page, null)
     println("Total: " + (System.nanoTime() - t0)/1000/1000)
 
      println("Break")
