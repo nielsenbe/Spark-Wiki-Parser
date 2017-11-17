@@ -45,7 +45,8 @@ object WkpParser {
     * @param input case class representation of xml element
     * @return WikipediaArticle
     */
-  def parseWikiText(input: InputPage, config: WkpParserConfiguration): WikipediaArticle = {
+  def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
+
 
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")
@@ -71,7 +72,9 @@ object WkpParser {
       val pageId = new PageId(pageTitle, input.id)
       val cp = engine.postprocess(pageId, wikiText, null)
       val parsedPage = cp.getPage
-      parseNode(input.id.intValue(), 0, parsedPage)
+
+      val state = new WkpParserState(input.id.intValue(), wkpconfig)
+      parseNode(state, parsedPage)
     }
 
     // Only parse if it is not a redirect
@@ -88,7 +91,7 @@ object WkpParser {
     val tables = elements.collect{case n: WikipediaTable => n}
 
     /* Clean and prepare text */
-    def isDuplicateReturn(a: WikipediaText, b: WikipediaText): Boolean = a.text != "\n" && b.text != "\n"
+    def isDuplicateReturn(a: WikipediaText, b: WikipediaText): Boolean = !(a.text == "\n" && b.text == "\n")
     val removedUnnecessaryReturns = elements.collect{case n: WikipediaText => n}.sliding(2).collect{case Seq(a,b) if isDuplicateReturn(a,b) => b}.toList
     val text = removedUnnecessaryReturns
       .groupBy(_.parentHeaderId)
@@ -178,7 +181,7 @@ object WkpParser {
     * @param wikiText text that needs to be reparsed
     * @return List of our simplified nodes
     */
-  private def parseWikiTextFragment(parentArticleId: Int, parentHeaderId: Int, wikiText: String): List[WikipediaElement] = {
+  private def parseWikiTextFragment(state: WkpParserState, wikiText: String): List[WikipediaElement] = {
 
     val config = DefaultConfigEnWp.generate
     val engine = new WtEngineImpl(config)
@@ -187,7 +190,7 @@ object WkpParser {
     val cp = engine.postprocess(pageId, wikiText, null)
     val parsedFragment = cp.getPage
 
-    parseNode(parentArticleId, parentHeaderId, parsedFragment)
+    parseNode(state, parsedFragment)
   }
 
   /** Determine how to parse each node type.
@@ -196,38 +199,37 @@ object WkpParser {
     *                 for mapping purposes.
     * @return List of our simplified nodes
     */
-  private def parseNode(parentArticleId: Int, parentHeaderId: Int, nodeList: java.util.List[WtNode]): List[WikipediaElement] = nodeList.toList flatMap {
+  private def parseNode(state: WkpParserState, nodeList: java.util.List[WtNode]): List[WikipediaElement] = nodeList.toList flatMap {
       /* Leaf classes */
       case _: WtHeading => List.empty // Don't parse section headers
-      case n: WtSection => processHeader(parentArticleId, parentHeaderId, n)
-      case n: WtText => processText(parentArticleId, parentHeaderId, n)
-      case n: WtXmlEntityRef => processHTMLEntity(parentArticleId, parentHeaderId, n)
-      case n: WtInternalLink => processWikiLink(parentArticleId, parentHeaderId, n)
-      case n: WtImageLink => processImageLink(parentArticleId, parentHeaderId, n)
-      case n: WtExternalLink => processExternalLink(parentArticleId, parentHeaderId, n)
-      case n: WtTemplate => processTemplate(parentArticleId, parentHeaderId, n)
-      case n: WtTagExtension => processTagExtension(parentArticleId, parentHeaderId, n)
-      case n: WtTable => processTable(parentArticleId, parentHeaderId, n)
+      case n: WtSection => processHeader(state, n)
+      case n: WtText if state.config.parseText => processText(state, n)
+      case n: WtXmlEntityRef  if state.config.parseText => processHTMLEntity(state, n)
+      case n: WtInternalLink if state.config.parseLinks => processWikiLink(state, n)
+      case n: WtImageLink if state.config.parseLinks  => processImageLink(state, n)
+      case n: WtExternalLink if state.config.parseLinks  => processExternalLink(state, n)
+      case n: WtTemplate if state.config.parseTemplates => processTemplate(state, n)
+      case n: WtTagExtension if state.config.parseTags => processTagExtension(state, n)
+      case n: WtTable if state.config.parseTables => processTable(state, n)
       /* Container classes */
-      case n: WtNodeListImpl => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtTableRow => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtTableHeader => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtTableCell => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtTableImplicitTableBody => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtTemplateArgument => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtXmlElement => parseNode(parentArticleId, parentHeaderId, n)
-      case n: WtContentNode => parseNode(parentArticleId, parentHeaderId, n)
+      case n: WtNodeListImpl => parseNode(state, n)
+      case n: WtTableRow => parseNode(state, n)
+      case n: WtTableHeader => parseNode(state, n)
+      case n: WtTableCell => parseNode(state, n)
+      case n: WtTableImplicitTableBody => parseNode(state, n)
+      case n: WtTemplateArgument => parseNode(state, n)
+      case n: WtXmlElement => parseNode(state, n)
+      case n: WtContentNode => parseNode(state, n)
       case _ => List.empty
     }
 
   /** Header title (==Title1== = H2)
     *
-    * @param parentArticleId
-    * @param parentHeaderId
-    * @param node
+    * @param state current Ids and configuration
+    * @param node Sweble node
     * @return
     */
-  private def processHeader(parentArticleId: Int, parentHeaderId: Int, node: WtSection): List[WikipediaElement] = {
+  private def processHeader(state: WkpParserState, node: WtSection): List[WikipediaElement] = {
 
     // Header Name
     val n = node.asInstanceOf[java.util.List[WtNode]]
@@ -236,8 +238,12 @@ object WkpParser {
     // Level
     val level = node.getLevel - 1
 
+    // Id
+    state.headerId = state.headerIdItr.next()
+    val headerId = state.headerId
+
     // Get nested nodes
-    val nodes = parseNode(parentArticleId, parentHeaderId + 1, node)
+    val nodes = parseNode(state, node)
 
     // Check if a heading has a Main Article template
     def isMainArticle(node: WikipediaTemplate) = Set("MAIN", "MAIN ARTICLE").contains(node.templateType.toUpperCase())
@@ -249,31 +255,34 @@ object WkpParser {
     val ancillaryHeaders = Set("REFERENCES", "EXTERNAL LINKS", "SEE ALSO", "NOTES", "BIBLIOGRAPHY", "FURTHER READING", "SOURCES", "FOOTNOTES", "PUBLICATIONS")
     val isAncillary = ancillaryHeaders.contains(headerName.toUpperCase())
 
-    List(WikipediaHeader(parentArticleId, parentHeaderId + 1, headerName, level, mainArticle, isAncillary)) ::: nodes
+    List(WikipediaHeader(state.articleId, headerId , headerName, level, mainArticle, isAncillary)) ::: nodes
   }
 
   /** Natural language text of an article.  What exactly constitutes this is determined by the parser.
     *
+    * @param state current Ids and configuration
     * @param node Sweble Text node
     * @return Single text element (converted to a list for the recursive function)
     */
-  private def processText(parentArticleId: Int, parentHeaderId: Int, node: WtText): List[WikipediaElement] = {
+  private def processText(state: WkpParserState, node: WtText): List[WikipediaElement] = {
     // Standardize line returns
     val content = node.getContent match {
+      case "\r\n\r\n" => "\n"
       case "\r" => "\n"
       case "\r\n" => "\n"
       case n => n
     }
 
-    List(WikipediaText(parentArticleId, parentHeaderId, content ))
+    List(WikipediaText(state.articleId, state.headerId, content ))
   }
 
   /** Internal wikimedia links
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtInternalLink  node
     * @return Link and its textual representation.  Links can and often are used as part of the text.
     */
-  private def processWikiLink(parentArticleId: Int, parentHeaderId: Int, node: WtInternalLink): List[WikipediaElement] = {
+  private def processWikiLink(state: WkpParserState, node: WtInternalLink): List[WikipediaElement] = {
 
     // Check if link is using bookmark [Page#SectionHeading]
     val hashSplit = node.getTarget.getAsString.split('#')
@@ -288,44 +297,46 @@ object WkpParser {
     val leftSide = destination.split(':') lift 0 getOrElse ""
     val subType  = nameSpaces find(_ == leftSide.toUpperCase()) getOrElse "WIKIPEDIA"
 
-    List(WikipediaLink(parentArticleId, parentHeaderId, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
-      List(WikipediaText(parentArticleId, parentHeaderId, text))
+    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
+      List(WikipediaText(state.articleId, state.headerId, text))
   }
 
   /** Internal wikimedia image.
     *
     * They are in a slightly different format and require special processing.
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtImageLink node
     * @return Link and its textual representation.  Links can and often are used as part of the text.
     */
-  private def processImageLink(parentArticleId: Int, parentHeaderId: Int, node: WtImageLink): List[WikipediaElement] = {
+  private def processImageLink(state: WkpParserState, node: WtImageLink): List[WikipediaElement] = {
     val destination = node.getTarget.getAsString
 
     val title = if(node.hasTitle) getTextFromNode(node.getTitle) else ""
     val text = if (title == "") destination else title.split('|').last
 
-    List(WikipediaLink(parentArticleId, parentHeaderId, destination, text, "WIKIMEDIA", "FILE", "")) :::
-      List(WikipediaText(parentArticleId, parentHeaderId, text))
+    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", "FILE", "")) :::
+      List(WikipediaText(state.articleId, state.headerId, text))
   }
 
   /** External link
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtExternalLink node
     * @return Wikipedia link
     */
-  private def processExternalLink(parentArticleId: Int, parentHeaderId: Int, node: WtExternalLink): List[WikipediaElement] = {
+  private def processExternalLink(state: WkpParserState, node: WtExternalLink): List[WikipediaElement] = {
     val title = getTextFromNode(node.getTitle)
     val destination = node(0) match {
       case n: WtUrl => n.getProtocol +":" + n.getPath
       case _ => ""
     }
 
-    processExternalLink(parentArticleId, parentHeaderId, title, destination)
+    processExternalLink(state, title, destination)
   }
 
   // Polymorphic implementation
-  private def processExternalLink(parentArticleId: Int, parentHeaderId: Int, title: String, destination: String): List[WikipediaElement] = {
+  private def processExternalLink(state: WkpParserState, title: String, destination: String): List[WikipediaElement] = {
     // check for bookmark
     val hashSplit = destination.split('#')
     val cleanDest = hashSplit(0)
@@ -335,39 +346,43 @@ object WkpParser {
     def parseURI(uri: String): Try[String] = Try(new URI(uri).getHost)
     val domain = parseURI(cleanDest).getOrElse("INVALID URI")
 
-    List(WikipediaLink(parentArticleId, parentHeaderId, cleanDest, title, "EXTERNAL", domain, pageBookmark))
+    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
   }
 
   /** HTML entities: > < & " ' etc
     * Convert them to text
+    *
+    * @param state current Ids and configuration
     * @param node Sweble WtXmlEntityRef node
     * @return text representation
     */
-  private def processHTMLEntity(parentArticleId: Int, parentHeaderId: Int, node: WtXmlEntityRef): List[WikipediaElement] = {
-    List(WikipediaText(parentArticleId, parentHeaderId, node.getResolved))
+  private def processHTMLEntity(state: WkpParserState, node: WtXmlEntityRef): List[WikipediaElement] = {
+    List(WikipediaText(state.articleId, state.headerId, node.getResolved))
   }
 
   /** HTML elements such as < math > < / math > (spaces added due to docstring)
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtTagExtension node
     * @return Tag element plus any nested elements
     */
-  private def processTagExtension(parentArticleId: Int, parentHeaderId: Int, node: WtTagExtension): List[WikipediaElement] = {
+  private def processTagExtension(state: WkpParserState, node: WtTagExtension): List[WikipediaElement] = {
     val tagName = node.getName
     val tagBody = node.getBody.getContent
 
     /*if(tagName.toUpperCase() == "REF")
-      parseWikiTextFragment(parentArticleId, parentHeaderId, tagBody)
+      parseWikiTextFragment(state.parentArticleId, parentHeaderId, tagBody)
     else*/
-      List(WikipediaTag(parentArticleId, parentHeaderId, tagName, tagBody))
+      List(WikipediaTag(state.articleId, state.headerId, state.elementIdItr.next, tagName, tagBody))
   }
 
   /** Templates are a special MediaWiki construct that allows code to be shared among articles
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtTemplate node
     * @return Template element plus any nested elements
     */
-  private def processTemplate(parentArticleId: Int, parentHeaderId: Int, node: WtTemplate): List[WikipediaElement] = {
+  private def processTemplate(state: WkpParserState, node: WtTemplate): List[WikipediaElement] = {
 
     val templateName = getTextFromNode(node.getName)
     val templateArgs = node.getArgs
@@ -385,25 +400,26 @@ object WkpParser {
     val linkNodes = parameterList
       .filter(innerNodeCheck)
       .map(_._2)
-      .flatMap(x => processExternalLink(parentArticleId, parentHeaderId, x, ""))
+      .flatMap(x => processExternalLink(state, x, ""))
 
     // Retrieve nested nodes
-    val innerNodes = parseNode(parentArticleId, parentHeaderId, node).filter {
+    val innerNodes = parseNode(state, node).filter {
       case _:WikipediaText => false
       case _ => true}
 
     // Determine if template is an info box
     val isInfoBox = templateName.toUpperCase().startsWith("INFOBOX") || Set("TAXOBOX", "GEOBOX").contains(templateName.toUpperCase())
 
-    List(WikipediaTemplate(parentArticleId, parentHeaderId, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
+    List(WikipediaTemplate(state.articleId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
   }
 
   /** Wiki tables
     *
+    * @param state current Ids and configuration
     * @param node Sweble WtTable node
     * @return HTML representation of the table.
     */
-  private def processTable(parentArticleId: Int, parentHeaderId: Int, node: WtTable): List[WikipediaElement] = {
+  private def processTable(state: WkpParserState, node: WtTable): List[WikipediaElement] = {
 
     // Get table caption
     def getTableCaption(node: WtNode): List[String] = node.toList flatMap {
@@ -429,11 +445,11 @@ object WkpParser {
     val html = s"<table>${ getHTML("", node).mkString("")}</table>"
 
     // Extract sub elements
-    val innerList = parseNode(parentArticleId, parentHeaderId, node).filter {
+    val innerList = parseNode(state, node).filter {
       case _:WikipediaText => false
       case _ => true}
 
-    List(WikipediaTable(parentArticleId, parentHeaderId, caption, html)) :::  innerList
+    List(WikipediaTable(state.articleId, state.headerId, state.elementIdItr.next, caption, html)) :::  innerList
   }
 
   /** The text nodes are often buried deeply and frequently need to be retrieved.

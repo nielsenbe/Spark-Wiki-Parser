@@ -97,6 +97,7 @@ case class WikipediaText (
 case class WikipediaTemplate(
   parentArticleId: Int,
   parentHeaderId: Int,
+  elementId: Int,
   templateType: String,
   isInfoBox: Boolean,
   parameters: List[(String, String)]) extends WikipediaElement
@@ -115,6 +116,7 @@ case class WikipediaTemplate(
 case class WikipediaLink(
   parentArticleId: Int,
   parentHeaderId: Int,
+  elementId: Int,
   destination: String,
   text: String,
   linkType: String,
@@ -131,6 +133,7 @@ case class WikipediaLink(
 case class WikipediaTag (
   parentArticleId: Int,
   parentHeaderId: Int,
+  elementId: Int,
   tag: String,
   tagValue: String) extends WikipediaElement
 
@@ -144,5 +147,6 @@ case class WikipediaTag (
 case class WikipediaTable (
   parentArticleId: Int,
   parentHeaderId: Int,
+  elementId: Int,
   caption: String,
   html: String) extends WikipediaElement

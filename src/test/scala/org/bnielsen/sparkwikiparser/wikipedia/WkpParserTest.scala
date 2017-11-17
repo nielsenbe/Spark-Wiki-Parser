@@ -1,12 +1,13 @@
-package main.scala.org.bnielsen.sparkwikiparser
+package test.scala.org.bnielsen.sparkwikiparser.wikipedia
 
 import main.scala.org.bnielsen.sparkwikiparser.wikipedia._
+import org.scalatest.FlatSpec
 
 import scala.io.Source
 
-object LocalTest {
-  def main (arg: Array[String]): Unit = {
+class WkpParserTest extends FlatSpec {
 
+  def FullParseTest(): Unit = {
     val wikiText = InputWikiText(
       Source.fromFile("src\\resources\\Test_Actual.txt").mkString,
       "preserve")
@@ -27,12 +28,15 @@ object LocalTest {
       "Albedo",
       revision)
 
+    val config = WkpParserConfiguration(true, true, true, true, true)
 
-    val t0 = System.nanoTime()
-    val article = WkpParser.parseWikiText(page, null)
-    println("Total: " + (System.nanoTime() - t0)/1000/1000)
+    for(i <- 1 to 100) {
+      val t0 = System.nanoTime()
+      val article = WkpParser.parseWikiText(page, config)
+      println("Total: " + (System.nanoTime() - t0)/1000/1000)
+    }
 
-     println("Break")
+
+    println("Break")
   }
 }
-
