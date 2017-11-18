@@ -5,5 +5,6 @@ case class WkpParserConfiguration(
   parseTemplates: Boolean,
   parseLinks: Boolean,
   parseTags: Boolean,
-  parseTables: Boolean
+  parseTables: Boolean,
+  parseRefTags: Boolean
 )
