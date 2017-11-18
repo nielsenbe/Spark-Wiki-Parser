@@ -30,7 +30,7 @@ This framework does not contain code for the raw parsing of the Wiki markup.  Ra
 The output of the parser is a simplified syntax tree or simple tree for short.
 Once the simple tree has been generated it is easy to save it to the desired format.  The framework's default persistence method is Parquet, but many others will work.
 
-## Source
+## Data Source
 This application reads data from the MediaWiki xml dump files.  These are BZ2 compressed XML files.  Wikipedia is the largest (~ 13 GB compressed).  They also break the files into 50 smaller parts (useful for testing).  
 Main site:
 
