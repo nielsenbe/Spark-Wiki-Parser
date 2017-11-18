@@ -47,7 +47,6 @@ object WkpParser {
     */
   def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
 
-
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")
     val redirectValue: String = Option(input.redirect).map(x => x._title).getOrElse("")
@@ -66,14 +65,14 @@ object WkpParser {
 
     /* Parse page */
     def parseWikiText(wikiText: String): List[WikipediaElement] = {
-      val config = DefaultConfigEnWp.generate
+      val config = DefaultConfigEnWp.generate()
       val engine = new WtEngineImpl(config)
       val pageTitle = PageTitle.make(config, input.title)
       val pageId = new PageId(pageTitle, input.id)
       val cp = engine.postprocess(pageId, wikiText, null)
       val parsedPage = cp.getPage
 
-      val state = new WkpParserState(input.id.intValue(), wkpconfig)
+      val state = new WkpParserState(input.id.intValue(), wkpconfig, engine, pageId)
       parseNode(state, parsedPage)
     }
 
@@ -91,11 +90,11 @@ object WkpParser {
     val tables = elements.collect{case n: WikipediaTable => n}
 
     /* Clean and prepare text */
-    def isDuplicateReturn(a: WikipediaText, b: WikipediaText): Boolean = !(a.text == "\n" && b.text == "\n")
-    val removedUnnecessaryReturns = elements.collect{case n: WikipediaText => n}.sliding(2).collect{case Seq(a,b) if isDuplicateReturn(a,b) => b}.toList
-    val text = removedUnnecessaryReturns
+    def isNotRepeatedLineBreak(a: WikipediaText, b: WikipediaText): Boolean = !(a.text == "\n" && b.text == "\n")
+    val text = elements
+      .collect{case n: WikipediaText => n}
       .groupBy(_.parentHeaderId)
-      .mapValues(x => x.map(_.text).mkString(""))
+      .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
       .map(x => WikipediaText(input.id.intValue(), x._1, x._2)).toList
 
     /* Classify page */
@@ -118,6 +117,7 @@ object WkpParser {
       tags,
       tables)
   }
+
 
   /** Classify the wikipedia article.
     * These are logical groupings and are mostly used for filtering articles.
@@ -182,14 +182,8 @@ object WkpParser {
     * @return List of our simplified nodes
     */
   private def parseWikiTextFragment(state: WkpParserState, wikiText: String): List[WikipediaElement] = {
-
-    val config = DefaultConfigEnWp.generate
-    val engine = new WtEngineImpl(config)
-    val pageTitle = PageTitle.make(config, "FRAGMENT")
-    val pageId = new PageId(pageTitle, 1)
-    val cp = engine.postprocess(pageId, wikiText, null)
+    val cp = state.swebleEngine.postprocess(state.sweblePage, wikiText, null)
     val parsedFragment = cp.getPage
-
     parseNode(state, parsedFragment)
   }
 
@@ -266,12 +260,7 @@ object WkpParser {
     */
   private def processText(state: WkpParserState, node: WtText): List[WikipediaElement] = {
     // Standardize line returns
-    val content = node.getContent match {
-      case "\r\n\r\n" => "\n"
-      case "\r" => "\n"
-      case "\r\n" => "\n"
-      case n => n
-    }
+    val content = node.getContent.replace("\r", "\n")
 
     List(WikipediaText(state.articleId, state.headerId, content ))
   }
@@ -370,9 +359,12 @@ object WkpParser {
     val tagName = node.getName
     val tagBody = node.getBody.getContent
 
-    /*if(tagName.toUpperCase() == "REF")
-      parseWikiTextFragment(state.parentArticleId, parentHeaderId, tagBody)
-    else*/
+    // Retrieve links and templates from ref headers
+    if(state.config.parseRefTags && tagName.toUpperCase() == "REF")
+      parseWikiTextFragment(state, tagBody).filter {
+        case _:WikipediaText => false
+        case _ => true}
+    else
       List(WikipediaTag(state.articleId, state.headerId, state.elementIdItr.next, tagName, tagBody))
   }
 
@@ -400,7 +392,7 @@ object WkpParser {
     val linkNodes = parameterList
       .filter(innerNodeCheck)
       .map(_._2)
-      .flatMap(x => processExternalLink(state, x, ""))
+      .flatMap(x => processExternalLink(state, x, x))
 
     // Retrieve nested nodes
     val innerNodes = parseNode(state, node).filter {

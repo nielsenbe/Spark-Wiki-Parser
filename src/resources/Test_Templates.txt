@@ -3,7 +3,6 @@
 {{Not Named Param Template|VALUE1}}
 {{Nested Template|{{Inner Template}}}}
 {{Template with url|url=http://google.com}}
-{{Template with wikiLink|url=[[TemplateWikiLink]]}}
 {{Template with escaped characters|title=TITLE{{!}}TITLE}}
 {| class="wikitable"
 |-
