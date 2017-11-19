@@ -5,3 +5,4 @@
 [[WikiLink#PAGEBOOKMARK]]
 [https://nsidc.org/cryosphere/seaice/processes/albedo.html EXTERNAL TEXT]
 [http:$BAD:URL]
+[[#INTERNALBOOKMARK]]

@@ -1,6 +1,19 @@
+/** Copyright 2017
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  * http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package scala
 
-import main.scala.org.bnielsen.sparkwikiparser.wikipedia._
+import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
 import org.scalatest._
 
 import scala.io.Source
@@ -25,7 +38,7 @@ class WkpParserTest extends FlatSpec {
       0,
       null,
       None,
-      "Albedo",
+      "ArticleName",
       revision)
   }
 
@@ -33,7 +46,7 @@ class WkpParserTest extends FlatSpec {
 
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Actual.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 22)
     assert(article.texts.size === 22)
@@ -46,7 +59,7 @@ class WkpParserTest extends FlatSpec {
   it should "correctly parse headers" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Headers.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 5)
     assert(article.texts.size === 5)
@@ -78,7 +91,7 @@ class WkpParserTest extends FlatSpec {
   it should "correctly parse text" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Text.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 5)
     assert(article.texts.size === 5)
@@ -101,12 +114,12 @@ class WkpParserTest extends FlatSpec {
   it should "correctly parse links" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Links.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 1)
     assert(article.templates.size === 0)
-    assert(article.links.size === 6)
+    assert(article.links.size === 7)
     assert(article.tags.size === 0)
     assert(article.tables.size === 0)
 
@@ -140,12 +153,16 @@ class WkpParserTest extends FlatSpec {
     assert(article.links(5).destination === "https://nsidc.org/cryosphere/seaice/processes/albedo.html")
     assert(article.links(5).subType === "nsidc.org")
     assert(article.links(5).linkType === "EXTERNAL")
+
+    // Internal bookmark
+    assert(article.links(6).destination == "ArticleName")
+    assert(article.links(6).pageBookmark == "INTERNALBOOKMARK")
   }
 
   it should "correctly parse templates" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Templates.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 1)
@@ -203,7 +220,7 @@ class WkpParserTest extends FlatSpec {
   it should "correctly parse tables" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("src\\resources\\Test_Tables.txt")
-    val article = WkpParser.parseWikiText(page, config)
+    val article = WkpParser.parseWiki(page, config)
 
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 0)
@@ -216,6 +233,5 @@ class WkpParserTest extends FlatSpec {
     assert(article.tables.head.elementId === 2)
     assert(article.tables.head.caption === "TABLE HEADER")
     assert(article.tables.head.html === "<table><tr><th>HEADER 1</th><th>HEADER2</th></tr><tr><td>CellContents1</td><td>Template in Cell</td></tr><tr><td>CellContents1</td><td>Link in Cell</td></tr></table>")
-
   }
 }

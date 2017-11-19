@@ -11,11 +11,11 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** These classes represent the simplified abstract syntax tree for a wikipedia article.
   * The goal behind these classes was to present a happy medium between a deep syntax tree and a completely flat
-  * format.  The high level structure:
+  * format.  High level structure:
   * Article
   * * Header Section
   * * Text
@@ -36,10 +36,16 @@ sealed trait WikipediaElement
   * @param title Wikipedia article's title.
   * @param nameSpace Text name of a wiki's name space. https://en.wikipedia.org/wiki/Wikipedia:Namespace
   * @param pageType Unofficial classification of page type.  Some types must be heuristically inferred.
-            ARTICLE, REDIRECT, DISAMBIGUATION, CATEGORY, LIST
+            ARTICLE, {NAMESPACE}, REDIRECT, DISAMBIGUATION, CATEGORY, LIST
   * @param lastRevisionId identifier for the last revision.
   * @param lastRevisionDate Date for when the article was last updated.
-  * @param headerSections Flattened list of wikipedia header sections and their child nodes.
+  * @param parserMessage SUCCESS or the error message
+  * @param headerSections Flattened list of wikipedia header sections
+  * @param texts Natural language portion of article
+  * @param templates WikiMedia templates
+  * @param links Wikimedia and Exteranl Links
+  * @param tags Handful of extended tags
+  * @param tables Wikimedia tables converted to HTML
   */
 case class WikipediaArticle(
   id: Long,
@@ -49,6 +55,7 @@ case class WikipediaArticle(
   pageType: String,
   lastRevisionId: Long,
   lastRevisionDate: Long,
+  parserMessage: String,
   headerSections: List[WikipediaHeader],
   texts: List[WikipediaText],
   templates: List[WikipediaTemplate],
@@ -59,12 +66,13 @@ case class WikipediaArticle(
 
 /** Container to hold header section data.
   *
-  * @param index Unique (to the article) identifier for a header.
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param headerId Unique (to the article) identifier for a header.
   * @param title Header text
   * @param level Header depth. 1 is Lead H2 = 2, H3 = 3, etc.
   * @param mainArticle  A section's main_article.  This is derived from the main template. The main template
   *                     contains very important semantic information.
-  * @param elements Child elements (text, link, template, tag, table)
+  * @param isAncillary If the header is a Reference, External Links, See more, etc type.
   */
 case class WikipediaHeader(
   parentArticleId: Int,
@@ -79,6 +87,8 @@ case class WikipediaHeader(
   * Natural text of an article.  The wikicode parsing process isn't an exact process and some artifacts
   * and some junk are to be expected.
   *
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param parentHeaderId The header the element is a child of.
   * @param text text fragment
   */
 case class WikipediaText (
@@ -90,7 +100,11 @@ case class WikipediaText (
   *
   * For example {{Global warming}} will create a table with links that are common to all GW related articles.
   *
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param parentHeaderId The header the element is a child of.
+  * @param elementId Unique (to the article) integer for an element.
   * @param templateType Template name, definition can be found via https://en.wikipedia.org/wiki/Template:[Template name]
+  * @param isInfoBox Is the template part of the Infobox family
   * @param parameters Templates can have 0..n parameters.  These may be named (arg=val) or just  referenced sequentially.
   *                   In this code they are represented via list of tuple (arg, value).
   */
@@ -104,6 +118,9 @@ case class WikipediaTemplate(
 
 /** HTTP link to either an internal page or an external page.
   *
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param parentHeaderId The header the element is a child of.
+  * @param elementId Unique (to the article) integer for an element.
   * @param destination URL.  For internal links, the wikipedia title, otherwise the domain.
             Internal domains may (and often do) point to redirects.  This needs to be taken
             into account when analysing links.
@@ -125,8 +142,12 @@ case class WikipediaLink(
 
 /** Contains info about an HTML tag.
   *
-  * We exclude some tags like ref and reflist because their contents are found elsewhere.
+  * Special XML tags that are not handled else where in the code.
+  * For the most part, ref and math are the main ones.
   *
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param parentHeaderId The header the element is a child of.
+  * @param elementId Unique (to the article) integer for an element.
   * @param tag tag name (without brackets)
   * @param tagValue contents inside of the tags
   */
@@ -139,6 +160,9 @@ case class WikipediaTag (
 
 /** Contains info about a table.
   *
+  * @param parentArticleId Wikimedia Id for the Article
+  * @param parentHeaderId The header the element is a child of.
+  * @param elementId Unique (to the article) integer for an element.
   * @param caption Table title (if any).
   * @param html Table converted to HTML form.  Wiki tables are tricky to capture in a common
             structured form.  Columns and rows can be merged.  Table header tags can be abused.

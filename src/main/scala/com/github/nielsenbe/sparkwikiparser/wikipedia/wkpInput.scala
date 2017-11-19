@@ -11,20 +11,23 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Simple case classes to serialize a MediaWiki dump.
   * These should correspond one to one with the XML structure (for the elements we care about).
   */
 
+/** Serialized form of XML */
 case class InputRedirect(
   _VALUE: String,
   _title: String)
 
+/** Serialized form of XML */
 case class InputWikiText(
   _VALUE: String,
   _space: String)
 
+/** Serialized form of XML */
 case class InputRevision(
   timestamp: String,
   comment: String,
@@ -32,6 +35,7 @@ case class InputRevision(
   id: Long,
   text: InputWikiText)
 
+/** Serialized form of XML */
 case class InputPage(
   id: Long,
   ns: Long,

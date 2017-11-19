@@ -11,12 +11,21 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 import org.sweble.wikitext.engine.{PageId, WtEngineImpl}
 
+/** Some state needs to be maintained as elements are parsed.  Be warned that some of these variables are mutable.
+  *
+  * @param articleId parent page id
+  * @param articleName parent page title (used for correctly assigning intra-article bookmark links)
+  * @param config parser options
+  * @param swebleEngine used for when an element needs re-parsing.  Saves cost of instantiation
+  * @param sweblePage used for when an element needs re-parsing.  Saves cost of instantiation
+  */
 class WkpParserState (
   val articleId: Int,
+  val articleName: String,
   val config: WkpParserConfiguration,
   val swebleEngine: WtEngineImpl,
   val sweblePage: PageId

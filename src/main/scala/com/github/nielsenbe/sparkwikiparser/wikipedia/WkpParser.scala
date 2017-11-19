@@ -11,15 +11,15 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Converts Wikitext to a simplified tree structure
   *
-  * Wikipedia articles are coded using a special MediaWiki syntax.  Parsing this text is not simple task and requires a
+  * Wikipedia articles are coded using a special MediaWiki syntax.  Parsing this text is not a simple task and requires a
   * specialized parser.  In our case we use the Sweble wiki parser.  Sweble produces a deep and exact abstract syntax
   * tree of the wiki page.  For most purposes this is overkill.  This class takes the AST and transforms it into a cleaned
   * and simplified version.  The simplified tree classes can be found at:
-  * main.scala.org.bnielsen.sparkwikiparser.DomainObjects.wikipediaArticleClasses
+  * main.scala.com.github.bnielsen.sparkwikiparser.wikipedia.wikipediaArticleClasses
   *
   * Once the simplified tree has been generated it can easily be converted to other formats.  Generally it is expected
   * that Apache Spark will handle the IO, but there is nothing stopping it from being used locally.
@@ -35,17 +35,48 @@ import org.sweble.wikitext.parser.nodes.WtNodeList.WtNodeListImpl
 import org.sweble.wikitext.parser.nodes._
 
 import scala.collection.JavaConversions._
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 
 object WkpParser {
+  /** Converts xml class to a simple abstract tree object
+    *
+    * Wraps the main parser in a try statement, returns a default article if invalid.
+    *
+    * @param input case class representation of xml element
+    * @param wkpconfig parser options
+    * @return WikipediaArticle
+    */
+  def parseWiki(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
+
+    Try(parseWikiText(input, wkpconfig)) match {
+      case Success(e) => e
+        /* We have millions of articles to parse, don't stop for every error.  Log and move on. */
+      case Failure(e) => WikipediaArticle(
+        input.id,
+        input.title,
+        "",
+        "",
+        "",
+        0,
+        0,
+        "Error: " + e.getMessage,
+        List.empty,
+        List.empty,
+        List.empty,
+        List.empty,
+        List.empty,
+        List.empty)
+    }
+  }
 
   /** Converts xml class to a simple abstract tree object
     *
     * @param input case class representation of xml element
+    * @param wkpconfig parser options
     * @return WikipediaArticle
     */
-  def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
+  private def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
 
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")
@@ -72,7 +103,7 @@ object WkpParser {
       val cp = engine.postprocess(pageId, wikiText, null)
       val parsedPage = cp.getPage
 
-      val state = new WkpParserState(input.id.intValue(), wkpconfig, engine, pageId)
+      val state = new WkpParserState(input.id.intValue(), input.title, wkpconfig, engine, pageId)
       parseNode(state, parsedPage)
     }
 
@@ -82,17 +113,16 @@ object WkpParser {
       case _ => List.empty
     }
 
-    /* Sort elements */
-    val headers = List(WikipediaHeader(input.id.intValue, 0,  "LEAD", 0, None, false)) ::: elements.collect{case n: WikipediaHeader => n}
-    val templates = elements.collect{case n: WikipediaTemplate => n}
-    val links = elements.collect{case n: WikipediaLink => n}
-    val tags = elements.collect{case n: WikipediaTag => n}
-    val tables = elements.collect{case n: WikipediaTable => n}
+    /* Group elements */
+    val headers = List(WikipediaHeader(input.id.intValue, 0, "LEAD", 0, None, false)) ::: elements.collect { case n: WikipediaHeader => n }
+    val templates = elements.collect { case n: WikipediaTemplate => n }
+    val links = elements.collect { case n: WikipediaLink => n }
+    val tags = elements.collect { case n: WikipediaTag => n }
+    val tables = elements.collect { case n: WikipediaTable => n }
 
     /* Clean and prepare text */
-    def isNotRepeatedLineBreak(a: WikipediaText, b: WikipediaText): Boolean = !(a.text == "\n" && b.text == "\n")
     val text = elements
-      .collect{case n: WikipediaText => n}
+      .collect { case n: WikipediaText => n }
       .groupBy(_.parentHeaderId)
       .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
       .map(x => WikipediaText(input.id.intValue(), x._1, x._2)).toList
@@ -110,6 +140,7 @@ object WkpParser {
       pageType,
       revId,
       lastRevision,
+      "SUCCESS",
       headers,
       text,
       templates,
@@ -119,14 +150,14 @@ object WkpParser {
   }
 
 
-  /** Classify the wikipedia article.
-    * These are logical groupings and are mostly used for filtering articles.
+  /** Classify the wikipedia page.
+    * These are logical groupings and are mostly used for filtering pages.
     *
     * @param title wikipedia article title
     * @param redirect redirect string
     * @param nameSpace namespace
     * @param isDisambiguation does the article contain any disambiguation templates
-    * @return
+    * @return logical page type
     */
   private def getPageType(title: String, redirect: String, nameSpace: String, isDisambiguation: Boolean): String = {
 
@@ -134,7 +165,7 @@ object WkpParser {
 
     if(!redirect.isEmpty)
       "REDIRECT"
-    else if(nameSpace == "Article")
+    else if(nameSpace != "ARTICLE")
       nameSpace
     else if(titleUpper.contains("DISAMBIGUATION"))
       "DISAMBIGUATION"
@@ -151,34 +182,35 @@ object WkpParser {
   /** Convert name space to text representation.
     *
     * @param ns integer from xml file
-    * @return textual name of namespace
+    * @return natural language name of namespace
     */
   private def getQualifiedNamespace(ns: Long): String = ns match {
-    case 0 => "Article"
-    case 1 => "Talk"
-    case 2  => "User"
-    case 4 => "Wikipedia"
-    case 6 => "File"
-    case 8 => "MediaWiki"
-    case 10 => "Template"
-    case 12 => "Help"
-    case 14 => "Category"
-    case 100 => "Portal"
-    case 108 => "Book"
-    case 118 => "Draft"
-    case 446 => "Education"
-    case 710 => "TimedText"
-    case 828 => "Module"
-    case 2300 => "Gadge"
-    case 2302 => "Gadget definition"
-    case -1 => "Special"
-    case -2 => "Media"
-    case _ => "Article"
+    case 0 => "ARTICLE"
+    case 1 => "TALK"
+    case 2  => "USER"
+    case 4 => "WIKIPEDIA"
+    case 6 => "FILE"
+    case 8 => "MEDIAWIKI"
+    case 10 => "TEMPLATE"
+    case 12 => "HELP"
+    case 14 => "CATEGORY"
+    case 100 => "PORTAL"
+    case 108 => "BOOK"
+    case 118 => "DRAFT"
+    case 446 => "EDUCATION"
+    case 710 => "TIMEDTEXT"
+    case 828 => "MODULE"
+    case 2300 => "GADGET"
+    case 2302 => "GADGET DEFINITION"
+    case -1 => "SPECIAL"
+    case -2 => "MEDIA"
+    case _ => "OTHER"
   }
 
-  /** If Sweble doesn't correctly parse a section then fix it and reparse it.
+  /** If Sweble doesn't correctly parse a section then we need send it back to the engine.
     *
-    * @param wikiText text that needs to be reparsed
+    * @param state contains stateful information for processing nodes
+    * @param wikiText text that needs to be re-parsed
     * @return List of our simplified nodes
     */
   private def parseWikiTextFragment(state: WkpParserState, wikiText: String): List[WikipediaElement] = {
@@ -189,6 +221,7 @@ object WkpParser {
 
   /** Determine how to parse each node type.
     *
+    * @param state contains stateful information for processing nodes
     * @param nodeList Sweble node super type WtNode implements the java list interface.  We cast to this
     *                 for mapping purposes.
     * @return List of our simplified nodes
@@ -219,7 +252,7 @@ object WkpParser {
 
   /** Header title (==Title1== = H2)
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble node
     * @return
     */
@@ -254,7 +287,7 @@ object WkpParser {
 
   /** Natural language text of an article.  What exactly constitutes this is determined by the parser.
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble Text node
     * @return Single text element (converted to a list for the recursive function)
     */
@@ -267,7 +300,7 @@ object WkpParser {
 
   /** Internal wikimedia links
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtInternalLink  node
     * @return Link and its textual representation.  Links can and often are used as part of the text.
     */
@@ -275,7 +308,11 @@ object WkpParser {
 
     // Check if link is using bookmark [Page#SectionHeading]
     val hashSplit = node.getTarget.getAsString.split('#')
-    val destination = hashSplit lift 0 getOrElse ""
+    val destination = hashSplit lift 0 match {
+      case Some(dest) if dest == "" => state.articleName
+      case Some(dest) => dest
+      case None => ""
+    }
     val pageBookmark = hashSplit lift 1 getOrElse ""
 
     // If title is empty, use destination
@@ -290,7 +327,7 @@ object WkpParser {
       List(WikipediaText(state.articleId, state.headerId, text))
   }
 
-  /** Internal wikimedia image.
+  /** Internal Wikimedia image.
     *
     * They are in a slightly different format and require special processing.
     *
@@ -310,7 +347,7 @@ object WkpParser {
 
   /** External link
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtExternalLink node
     * @return Wikipedia link
     */
@@ -341,7 +378,7 @@ object WkpParser {
   /** HTML entities: > < & " ' etc
     * Convert them to text
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtXmlEntityRef node
     * @return text representation
     */
@@ -351,7 +388,7 @@ object WkpParser {
 
   /** HTML elements such as < math > < / math > (spaces added due to docstring)
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtTagExtension node
     * @return Tag element plus any nested elements
     */
@@ -370,7 +407,7 @@ object WkpParser {
 
   /** Templates are a special MediaWiki construct that allows code to be shared among articles
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtTemplate node
     * @return Template element plus any nested elements
     */
@@ -407,7 +444,7 @@ object WkpParser {
 
   /** Wiki tables
     *
-    * @param state current Ids and configuration
+    * @param state contains stateful information for processing nodes
     * @param node Sweble WtTable node
     * @return HTML representation of the table.
     */
