@@ -43,3 +43,4 @@ case class InputPage(
   restrictions: Option[String],
   title: String,
   revision: InputRevision)
+

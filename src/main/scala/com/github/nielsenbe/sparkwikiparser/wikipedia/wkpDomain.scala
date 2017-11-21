@@ -61,8 +61,7 @@ case class WikipediaArticle(
   templates: List[WikipediaTemplate],
   links: List[WikipediaLink],
   tags: List[WikipediaTag],
-  tables: List[WikipediaTable]
-)
+  tables: List[WikipediaTable])
 
 /** Container to hold header section data.
   *
@@ -107,6 +106,7 @@ case class WikipediaText (
   * @param isInfoBox Is the template part of the Infobox family
   * @param parameters Templates can have 0..n parameters.  These may be named (arg=val) or just  referenced sequentially.
   *                   In this code they are represented via list of tuple (arg, value).
+  *                   If a argument is not named, then a place holder of *POS_[0 based index] is used.
   */
 case class WikipediaTemplate(
   parentArticleId: Int,

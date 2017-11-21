@@ -48,6 +48,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Actual.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 22)
     assert(article.texts.size === 22)
     assert(article.templates.size === 52)
@@ -61,6 +62,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Headers.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 5)
     assert(article.texts.size === 5)
     assert(article.templates.size === 1)
@@ -93,6 +95,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Text.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 5)
     assert(article.texts.size === 5)
     assert(article.templates.size === 0)
@@ -116,6 +119,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Links.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 1)
     assert(article.templates.size === 0)
@@ -164,6 +168,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Templates.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 1)
     assert(article.templates.size === 11)
@@ -188,7 +193,7 @@ class WkpParserTest extends FlatSpec {
 
     // Positional parameter
     assert(article.templates(2).templateType === "Not Named Param Template")
-    assert(article.templates(2).parameters(0)._1 === "")
+    assert(article.templates(2).parameters(0)._1 === "*POS_0")
     assert(article.templates(2).parameters(0)._2 === "VALUE1")
 
     // Nested template
@@ -222,6 +227,7 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("src\\resources\\Test_Tables.txt")
     val article = WkpParser.parseWiki(page, config)
 
+    assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 1)
     assert(article.texts.size === 0)
     assert(article.templates.size === 1)

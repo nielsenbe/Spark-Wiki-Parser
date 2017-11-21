@@ -417,12 +417,15 @@ object WkpParser {
     val templateArgs = node.getArgs
 
     // Build Parameters
-    def buildParameterPair(node: WtNode): (String, String) = {
-      val name = getTextFromNode(node.get(0))
-      val value = getTextFromNode(node.get(1))
+    def buildParameterPair(node: (WtNode, Int)): (String, String) = {
+      val name = getTextFromNode(node._1.get(0)) match {case "" => "*POS_" + node._2 case n => n}
+      val value = getTextFromNode(node._1.get(1))
       (name, value)
     }
-    val parameterList = templateArgs.toList map buildParameterPair
+    val parameterList = templateArgs
+      .zipWithIndex
+      .map(buildParameterPair)
+      .toList
 
     // Extract urls from parameters
     def innerNodeCheck(nvp: (String, String)): Boolean = Set("HTTP", "WWW.").exists(nvp._2.toUpperCase.startsWith)
