@@ -3,6 +3,17 @@
 # Spark-Wiki-Parser
 Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting MediaWiki dumps (Wikipedia, Wiktionary, Wikidata).  It uses the Sweble parser to do the initial syntax tree generation.  The app then cleans, enriches, and condenses the tree down to a flattened format.  From there it can be exported to JSON, CSV, Parquet, etc.
 
+# Development Progress
+MediaWiki is a large family, but at the moment the framework can parse the following MW sources:
+* Wikipedia (In progress)
+* WikiSource (Future)
+* Wiktionary (Future)
+* Wikidata (Future)
+* DBPedia (Future)
+
+## Documentation
+We use the Github [wiki](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki)
+
 ## Project Goals
 * Grant researchers easy access to the data stored in the MediaWiki family.
 * Focus on content and semantics over formatting and syntax.
@@ -20,33 +31,8 @@ Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting 
 ## Languages
 The Sweble parser is Java based and this wrapper is written in Scala.  The initial parsing must be done with the Scala interpreter.  Once the xml dump is converted to the intermediate files then any Spark supported language can be used for analysis. (Scala, Java, Python, or R)
 
-## Overview
-Spark-Wiki-Parser is a framework for researchers who want to use Apache Spark to analyze MediaWiki data.  MediaWiki is a large family, but at the moment the framework can parse the following MW sources:
-* Wikipedia
-* WikiSource (Future)
-* Wiktionary (Future)
-* Wikidata (Future)
-* DBPedia (Future)
-
-This framework does not contain code for the raw parsing of the Wiki markup.  Rather it acts as a wrapper for the Sweble parser.  Sweble produces a deep and complex abstract syntax tree.  Most of the code in this project revolves around taking that syntax tree and flattening, cleaning, and enriching it.
-
-The output of the parser is a simplified syntax tree or simple tree for short.
-Once the simple tree has been generated it is easy to save it to the desired format.  The framework's default persistence method is Parquet, but many others will work.
-
 ## Data Source
-This application reads data from the MediaWiki xml dump files.  These are BZ2 compressed XML files.  Wikipedia is the largest (~ 13 GB compressed).  They also break the files into 50 smaller parts (useful for testing).  
-Main site:
-
-[Wikimedia Downloads](https://dumps.wikimedia.org/backup-index.html)
-
-[Mirrors](https://dumps.wikimedia.org/mirrors.html)
-
-* enwiki = English Wikipedia
-* enwiki-[date]-pages-articles.xml.bz2 = Full backup
-* enwiki-[date]-pages-articles1.xml-p[id].bz2 = Full backup divided into 50 pieces
-
-All the notebooks use Databrick's XML source to parse the file.  Other methods are available, but this method has been tested and validated.
-[Databrick's XML](https://github.com/databricks/spark-xml)
+This application reads data from the MediaWiki xml dump files.  These are BZ2 compressed XML files.  Wikipedia is the largest (~ 13 GB compressed).  They also break the files into 50 smaller parts (useful for testing).  More information can be found in our documentation.
 
 ## Caveats and known limitations
 * JAR has not been loaded to Maven central yet.
