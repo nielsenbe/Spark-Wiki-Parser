@@ -17,6 +17,9 @@ Spark-Wiki-Parser is an Apache Spark based framework for parsing and extracting 
 * Apache Zeppelin / Jupyter
   * Only needed if the notebooks are being utilized.
 
+## Languages
+The Sweble parser is Java based and this wrapper is written in Scala.  The initial parsing must be done with the Scala interpreter.  Once the xml dump is converted to the intermediate files then any Spark supported language can be used for analysis. (Scala, Java, Python, or R)
+
 ## Overview
 Spark-Wiki-Parser is a framework for researchers who want to use Apache Spark to analyze MediaWiki data.  MediaWiki is a large family, but at the moment the framework can parse the following MW sources:
 * Wikipedia
@@ -39,13 +42,16 @@ Main site:
 [Mirrors](https://dumps.wikimedia.org/mirrors.html)
 
 * enwiki = English Wikipedia
- * enwiki-[date]-pages-articles.xml.bz2 = Full backup
- * enwiki-[date]-pages-articles1.xml-p[id].bz2 = Full backup divided into 50 pieces
+* enwiki-[date]-pages-articles.xml.bz2 = Full backup
+* enwiki-[date]-pages-articles1.xml-p[id].bz2 = Full backup divided into 50 pieces
 
 All the notebooks use Databrick's XML source to parse the file.  Other methods are available, but this method has been tested and validated.
 [Databrick's XML](https://github.com/databricks/spark-xml)
 
 ## Caveats and known limitations
+* JAR has not been loaded to Maven central yet.
+  * Due to the early alpha nature of this app, we have not uploaded the JAR to any repo.
+  * This means that a couple extra steps must be taken to load the JAR to a Spark cluster.
 * Parser only supports english wikis
   * Other languages will parse, but columns such as Main Article might not work.
 * Parser only works with current edit
@@ -53,5 +59,4 @@ All the notebooks use Databrick's XML source to parse the file.  Other methods a
 * Parsing < ref > tags can be slow.
   * Sweble does not have logic for pulling out citation templates from a < ref > tag.
   * Reparsing the tag contents will increase overall execution time.
-  * If this information isn't needed, then it is recommended that parseRefTags be set to false in WkpParserConfiguration.
-
+  * If this information(references) isn't needed, then it is recommended that parseRefTags be set to false in WkpParserConfiguration.
