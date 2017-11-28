@@ -74,7 +74,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.headerSections.head.headerId === 0)
     assert(article.headerSections.head.title === "LEAD")
     assert(article.headerSections.head.level === 0)
-    assert(article.headerSections.head.mainArticle === None)
+    assert(article.headerSections.head.mainPage === None)
     assert(article.headerSections.head.isAncillary === false)
 
     // Assert nested headers are correctly formatted
@@ -83,7 +83,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.headerSections(1).level === 1)
 
     // Main article
-    assert(article.headerSections(2).mainArticle === Some("Albedo"))
+    assert(article.headerSections(2).mainPage === Some("Albedo"))
 
     // Is Ancillary
     assert(article.headerSections(4).isAncillary === true)
@@ -103,7 +103,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.tags.size === 0)
     assert(article.tables.size === 0)
 
-    assert(article.texts(0).parentArticleId === 39)
+    assert(article.texts(0).parentPageId === 39)
     assert(article.texts(0).parentHeaderId === 0)
     assert(article.texts(0).text === "Lead Text italics bold bold italics")
 
@@ -128,7 +128,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.tables.size === 0)
 
     // Assert lead is correctly formatted
-    assert(article.links(0).parentArticleId === 39)
+    assert(article.links(0).parentPageId === 39)
     assert(article.links(0).parentHeaderId === 0)
     assert(article.links(0).elementId === 0)
     assert(article.links(0).destination === "WikiLink")
@@ -177,7 +177,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.tables.size === 1)
 
     // Parameterless template
-    assert(article.templates(0).parentArticleId === 39)
+    assert(article.templates(0).parentPageId === 39)
     assert(article.templates(0).parentHeaderId === 0)
     assert(article.templates(0).elementId === 0)
     assert(article.templates(0).templateType === "No Param Template")
@@ -235,7 +235,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.tags.size === 0)
     assert(article.tables.size === 1)
 
-    assert(article.tables.head.parentArticleId === 39)
+    assert(article.tables.head.parentPageId === 39)
     assert(article.tables.head.elementId === 2)
     assert(article.tables.head.caption === "TABLE HEADER")
     assert(article.tables.head.html === "<table><tr><th>HEADER 1</th><th>HEADER2</th></tr><tr><td>CellContents1</td><td>Template in Cell</td></tr><tr><td>CellContents1</td><td>Link in Cell</td></tr></table>")

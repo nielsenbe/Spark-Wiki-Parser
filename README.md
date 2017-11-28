@@ -6,7 +6,7 @@ The goal of the Spark-Wiki-Parser project is to enable researchers and machine l
 ## Getting Started
 There are multiple entry points depending on your Spark provider(AWS, Azure, or self hosted) and submit method (Spark Submit or Zeppelin/Jupyter).  See our [wiki](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki) to get started.
 
-# Development Progress
+## Development Progress
 MediaWiki is a large family, but at the moment the framework can parse the following MW sources:
 * Wikipedia (In progress)
 * DBPedia (Future)

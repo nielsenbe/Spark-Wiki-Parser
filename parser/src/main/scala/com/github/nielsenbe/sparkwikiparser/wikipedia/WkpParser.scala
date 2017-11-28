@@ -15,11 +15,11 @@ package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Converts Wikitext to a simplified tree structure
   *
-  * Wikipedia articles are coded using a special MediaWiki syntax.  Parsing this text is not a simple task and requires a
+  * Wikipedia pages are coded using a special MediaWiki syntax.  Parsing this text is not a simple task and requires a
   * specialized parser.  In our case we use the Sweble wiki parser.  Sweble produces a deep and exact abstract syntax
   * tree of the wiki page.  For most purposes this is overkill.  This class takes the AST and transforms it into a cleaned
   * and simplified version.  The simplified tree classes can be found at:
-  * main.scala.com.github.bnielsen.sparkwikiparser.wikipedia.wikipediaArticleClasses
+  * main.scala.com.github.bnielsen.sparkwikiparser.wikipedia.wikipediaPageClasses
   *
   * Once the simplified tree has been generated it can easily be converted to other formats.  Generally it is expected
   * that Apache Spark will handle the IO, but there is nothing stopping it from being used locally.
@@ -41,18 +41,18 @@ import scala.util.{Failure, Success, Try}
 object WkpParser {
   /** Converts xml class to a simple abstract tree object
     *
-    * Wraps the main parser in a try statement, returns a default article if invalid.
+    * Wraps the main parser in a try statement, returns a default page if invalid.
     *
     * @param input case class representation of xml element
     * @param wkpconfig parser options
-    * @return WikipediaArticle
+    * @return WikipediaPage
     */
-  def parseWiki(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
+  def parseWiki(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaPage = {
 
     Try(parseWikiText(input, wkpconfig)) match {
       case Success(e) => e
-        /* We have millions of articles to parse, don't stop for every error.  Log and move on. */
-      case Failure(e) => WikipediaArticle(
+        /* We have millions of pages to parse, don't stop for every error.  Log and move on. */
+      case Failure(e) => WikipediaPage(
         input.id,
         input.title,
         "",
@@ -74,9 +74,9 @@ object WkpParser {
     *
     * @param input case class representation of xml element
     * @param wkpconfig parser options
-    * @return WikipediaArticle
+    * @return WikipediaPage
     */
-  private def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaArticle = {
+  private def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaPage = {
 
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")
@@ -107,9 +107,9 @@ object WkpParser {
       parseNode(state, parsedPage)
     }
 
-    // Only parse if it is not a redirect
+    // Only parse if it is not a redirect or text is empty
     val elements = redirect match {
-      case "" => parseWikiText(wikiText)
+      case "" if wikiText.length > 0 => parseWikiText(wikiText)
       case _ => List.empty
     }
 
@@ -127,12 +127,12 @@ object WkpParser {
       .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
       .map(x => WikipediaText(input.id.intValue(), x._1, x._2)).toList
 
-    /* Classify page */
+    /* Classify page using namespace and some heuristics */
     val isDisambiguation = templates.exists(x => Set("DISAMBIGUATION", "DISAMBIG", "DISAMBIG-ACRONYM", "DISAMBIGUATION CATEGORY", "DAB").contains(x.templateType))
     val pageType = getPageType(title, redirect, qualifiedNameSpace, isDisambiguation)
 
     /* Return case class */
-    WikipediaArticle(
+    WikipediaPage(
       input.id,
       input.title,
       redirect,
@@ -153,10 +153,10 @@ object WkpParser {
   /** Classify the wikipedia page.
     * These are logical groupings and are mostly used for filtering pages.
     *
-    * @param title wikipedia article title
+    * @param title wikipedia page title
     * @param redirect redirect string
     * @param nameSpace namespace
-    * @param isDisambiguation does the article contain any disambiguation templates
+    * @param isDisambiguation does the page contain any disambiguation templates
     * @return logical page type
     */
   private def getPageType(title: String, redirect: String, nameSpace: String, isDisambiguation: Boolean): String = {
@@ -272,20 +272,21 @@ object WkpParser {
     // Get nested nodes
     val nodes = parseNode(state, node)
 
-    // Check if a heading has a Main Article template
-    def isMainArticle(node: WikipediaTemplate) = Set("MAIN", "MAIN ARTICLE").contains(node.templateType.toUpperCase())
-    val mainArticle = nodes.take(3).collect {
-      case n: WikipediaTemplate if isMainArticle(n) => if (n.parameters.nonEmpty) n.parameters.head._2 else ""
+    // Check if a heading has a Main Page template
+    def isMainPage(node: WikipediaTemplate) = Set("MAIN", "MAIN ARTICLE").contains(node.templateType.toUpperCase())
+    val mainPage = nodes.take(3).collect {
+      case n: WikipediaTemplate if isMainPage(n) => if (n.parameters.nonEmpty) n.parameters.head._2 else ""
     } lift 0
 
     // Determine if it is an ancillary section
-    val ancillaryHeaders = Set("REFERENCES", "EXTERNAL LINKS", "SEE ALSO", "NOTES", "BIBLIOGRAPHY", "FURTHER READING", "SOURCES", "FOOTNOTES", "PUBLICATIONS")
+    val ancillaryHeaders = Set("REFERENCES", "EXTERNAL LINKS", "SEE ALSO", "NOTES", "BIBLIOGRAPHY", "FURTHER READING",
+      "SOURCES", "FOOTNOTES", "PUBLICATIONS", "USERS", "LINKS")
     val isAncillary = ancillaryHeaders.contains(headerName.toUpperCase())
 
-    List(WikipediaHeader(state.articleId, headerId , headerName, level, mainArticle, isAncillary)) ::: nodes
+    List(WikipediaHeader(state.pageId, headerId , headerName, level, mainPage, isAncillary)) ::: nodes
   }
 
-  /** Natural language text of an article.  What exactly constitutes this is determined by the parser.
+  /** Natural language text of an page.  What exactly constitutes this is determined by the parser.
     *
     * @param state contains stateful information for processing nodes
     * @param node Sweble Text node
@@ -295,7 +296,7 @@ object WkpParser {
     // Standardize line returns
     val content = node.getContent.replace("\r", "\n")
 
-    List(WikipediaText(state.articleId, state.headerId, content ))
+    List(WikipediaText(state.pageId, state.headerId, content ))
   }
 
   /** Internal wikimedia links
@@ -309,7 +310,7 @@ object WkpParser {
     // Check if link is using bookmark [Page#SectionHeading]
     val hashSplit = node.getTarget.getAsString.split('#')
     val destination = hashSplit lift 0 match {
-      case Some(dest) if dest == "" => state.articleName
+      case Some(dest) if dest == "" => state.pageTitle
       case Some(dest) => dest
       case None => ""
     }
@@ -323,8 +324,8 @@ object WkpParser {
     val leftSide = destination.split(':') lift 0 getOrElse ""
     val subType  = nameSpaces find(_ == leftSide.toUpperCase()) getOrElse "WIKIPEDIA"
 
-    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
-      List(WikipediaText(state.articleId, state.headerId, text))
+    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
+      List(WikipediaText(state.pageId, state.headerId, text))
   }
 
   /** Internal Wikimedia image.
@@ -341,8 +342,8 @@ object WkpParser {
     val title = if(node.hasTitle) getTextFromNode(node.getTitle) else ""
     val text = if (title == "") destination else title.split('|').last
 
-    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", "FILE", "")) :::
-      List(WikipediaText(state.articleId, state.headerId, text))
+    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", "FILE", "")) :::
+      List(WikipediaText(state.pageId, state.headerId, text))
   }
 
   /** External link
@@ -372,7 +373,7 @@ object WkpParser {
     def parseURI(uri: String): Try[String] = Try(new URI(uri).getHost)
     val domain = parseURI(cleanDest).getOrElse("INVALID URI")
 
-    List(WikipediaLink(state.articleId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
+    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
   }
 
   /** HTML entities: > < & " ' etc
@@ -383,7 +384,7 @@ object WkpParser {
     * @return text representation
     */
   private def processHTMLEntity(state: WkpParserState, node: WtXmlEntityRef): List[WikipediaElement] = {
-    List(WikipediaText(state.articleId, state.headerId, node.getResolved))
+    List(WikipediaText(state.pageId, state.headerId, node.getResolved))
   }
 
   /** HTML elements such as < math > < / math > (spaces added due to docstring)
@@ -402,10 +403,10 @@ object WkpParser {
         case _:WikipediaText => false
         case _ => true}
     else
-      List(WikipediaTag(state.articleId, state.headerId, state.elementIdItr.next, tagName, tagBody))
+      List(WikipediaTag(state.pageId, state.headerId, state.elementIdItr.next, tagName, tagBody))
   }
 
-  /** Templates are a special MediaWiki construct that allows code to be shared among articles
+  /** Templates are a special MediaWiki construct that allows code to be shared among pages
     *
     * @param state contains stateful information for processing nodes
     * @param node Sweble WtTemplate node
@@ -442,7 +443,7 @@ object WkpParser {
     // Determine if template is an info box
     val isInfoBox = templateName.toUpperCase().startsWith("INFOBOX") || Set("TAXOBOX", "GEOBOX").contains(templateName.toUpperCase())
 
-    List(WikipediaTemplate(state.articleId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
+    List(WikipediaTemplate(state.pageId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
   }
 
   /** Wiki tables
@@ -481,7 +482,7 @@ object WkpParser {
       case _:WikipediaText => false
       case _ => true}
 
-    List(WikipediaTable(state.articleId, state.headerId, state.elementIdItr.next, caption, html)) :::  innerList
+    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, caption, html)) :::  innerList
   }
 
   /** The text nodes are often buried deeply and frequently need to be retrieved.

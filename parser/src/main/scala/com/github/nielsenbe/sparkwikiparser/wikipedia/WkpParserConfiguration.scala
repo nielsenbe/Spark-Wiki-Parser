@@ -16,7 +16,7 @@ package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 /** Settings for telling the parser which elements to parse
   *
   * @param parseText text can be turned off without impacting other elements
-  * @param parseTemplates turning off templates will remove the ability to identify a sections main article
+  * @param parseTemplates turning off templates will remove the ability to identify a sections main page
   *                       it will also cause some disambiguation pages to be labeled as articles
   * @param parseLinks turning off links will cause some errors in the text since links are often used as part of the text
   * @param parseTags turning off tags will cause many reference citations to disappear
