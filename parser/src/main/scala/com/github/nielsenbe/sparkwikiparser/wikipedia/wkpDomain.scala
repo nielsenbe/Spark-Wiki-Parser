@@ -14,8 +14,7 @@
 package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** These classes represent the simplified abstract syntax tree for a wikipedia page.
-  * The goal behind these classes was to present a happy medium between a deep syntax tree and a completely flat
-  * format.  High level structure:
+  * The goal behind these classes was to flatten the initial deep abstract syntax tree into something more manageable.
   * Article
   * * Header Section
   * * Text
