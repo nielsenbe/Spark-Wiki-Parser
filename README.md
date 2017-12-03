@@ -1,7 +1,7 @@
 (WARNING APP IS IN EXTREME EARLY ALPHA)
 
 # Spark-Wiki-Parser
-The goal of the Spark-Wiki-Parser project is to enable researchers and machine learning experts to quickly extract insights and value from the [MediaWiki](https://wikimediafoundation.org/wiki/Our_projects) and [DBpedia]( http://wiki.dbpedia.org/) data dumps.  The project is split into two parts: the Scala based parser and notebooks.  The Scala parser is platform neutral, but has been designed to work best with Apache Spark.  It reads the data dumps and extracts them to a common simplified format.  The notebooks are designed to showcase ways to utilize the parser and Apache Spark in AI and machine learning tasks.
+The goal of the Spark-Wiki-Parser project is to enable researchers and machine learning experts to quickly extract insights and value from the [MediaWiki](https://wikimediafoundation.org/wiki/Our_projects) and [DBpedia]( http://wiki.dbpedia.org/) data dumps.  The project is split into two parts: the Scala based parser and jump start project code.  The Scala parser is platform neutral, but has been designed to work best with Apache Spark.  It reads the data dumps and extracts them to a common simplified format.  The jump start projects are designed to showcase ways to utilize the parser and Apache Spark in AI and machine learning tasks.
 
 ## Getting Started
 There are multiple entry points depending on your Spark provider(AWS, Azure, or self hosted) and submit method (Spark Submit or Zeppelin/Jupyter).  See our [wiki](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki) to get started.
@@ -18,7 +18,7 @@ MediaWiki is a large family, but at the moment the framework can parse the follo
 * Grant researchers easy access to the data stored in the MediaWiki family.
 * Focus on content and semantics over formatting and syntax.
 * Take advantage of Spark's built in data import and export functionality.
-* Provide Apache Zeppelin notebooks (for Azure HDInsight and AWS EMR) to minimize hassle.
+* Provide jump start projects to demonstrate usage.
 
 ## Requirements
 * Apache Spark cluster 

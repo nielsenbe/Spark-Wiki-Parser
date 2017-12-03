@@ -34,8 +34,8 @@ sealed trait WikipediaElement
   * @param id Unique wikipedia ID from the dump file.
   * @param title Wikipedia page's title.
   * @param nameSpace Text name of a wiki's name space. https://en.wikipedia.org/wiki/Wikipedia:Namespace
-  * @param pageType Unofficial classification of page type.  Some types must be heuristically inferred.
-            ARTICLE, {NAMESPACE}, REDIRECT, DISAMBIGUATION, CATEGORY, LIST
+  * @param pageType Similar to namespace, but Articles are split into ARTICLE, REDIRECT, DISAMBIGUATION, and LIST.
+  *                 Otherwise defaults to namespace.
   * @param lastRevisionId identifier for the last revision.
   * @param lastRevisionDate Date for when the page was last updated.
   * @param parserMessage SUCCESS or the error message
@@ -139,7 +139,7 @@ case class WikipediaLink(
   subType: String,
   pageBookmark: String) extends WikipediaElement
 
-/** Contains info about an HTML tag.
+/** Contains info about an HTML tag.  Mostly these are tags that Sweble cannot parse.
   *
   * Special XML tags that are not handled else where in the code.
   * For the most part, ref and math are the main ones.
@@ -162,6 +162,7 @@ case class WikipediaTag (
   * @param parentPageId Wikimedia Id for the page
   * @param parentHeaderId The header the element is a child of.
   * @param elementId Unique (to the page) integer for an element.
+  * @param tableHtmlType The primary html element of the table TABLE, OL, UL, or DL
   * @param caption Table title (if any).
   * @param html Table converted to HTML form.  Wiki tables are tricky to capture in a common
             structured form.  Columns and rows can be merged.  Table header tags can be abused.
@@ -171,5 +172,6 @@ case class WikipediaTable (
   parentPageId: Int,
   parentHeaderId: Int,
   elementId: Int,
+  tableHtmlType: String,
   caption: String,
   html: String) extends WikipediaElement

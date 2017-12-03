@@ -238,6 +238,9 @@ object WkpParser {
       case n: WtTemplate if state.config.parseTemplates => processTemplate(state, n)
       case n: WtTagExtension if state.config.parseTags => processTagExtension(state, n)
       case n: WtTable if state.config.parseTables => processTable(state, n)
+      case n: WtOrderedList if state.config.parseTables => processList(state, n, "ol")
+      case n: WtUnorderedList if state.config.parseTables => processList(state, n, "ul")
+      case n: WtDefinitionList if state.config.parseTables => processList(state, n, "dl")
       /* Container classes */
       case n: WtNodeListImpl => parseNode(state, n)
       case n: WtTableRow => parseNode(state, n)
@@ -482,7 +485,54 @@ object WkpParser {
       case _:WikipediaText => false
       case _ => true}
 
-    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, caption, html)) :::  innerList
+    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, "TABLE", caption, html)) :::  innerList
+  }
+
+  /** This parse groups lists, ordered lists, and definition lists as tables.  They are converted to their
+    * respective ul, ol, and dl html representations.
+    *
+    * @param state contains stateful information for processing nodes
+    * @param node Sweble node of WtOrderedList, WtUnorderedList, and WtDefinitionList
+    * @param nType OL, UL, or DL unordered list, ordered list, or definition list
+    * @return Table element plus any nested nodes
+    */
+  private def processList(state: WkpParserState, node: WtContentNode, nType: String): List[WikipediaElement] = {
+
+    def getListItemContents(node: WtNode): String = node match {
+      case n: WtText => n.getContent.replace("\r", "").replace("\n", "").trim
+      case n: WtTagExtension => n.getBody.getContent
+      case n: WtInternalLink => n.map(getTextFromNode).mkString("")
+      case n: WtOrderedList => ""
+      case n: WtUnorderedList => ""
+      case n: WtDefinitionList => ""
+      case n: java.util.List[WtNode] if n.size() > 0 => n.map(getListItemContents).mkString("")
+      case _ => ""
+    }
+
+    // Lists can be nested in other lists this causes some problems because the output needs to be
+    // <ol><ol><li></li></ol></ol>
+    // not <ol><li><li></li></li></ol>
+    def getHTML(table: String, node: WtNode): String = {
+      val subResult = node.toList map {
+        case n: WtDefinitionListDef => s"<dd>${getListItemContents(n)}</dd>"
+        case n: WtDefinitionListTerm => s"<dt>${getListItemContents(n)}</dt>"
+        case n: WtListItem => s"<li>${getListItemContents(n)}</li>" + getHTML(table, n)
+        case n: WtOrderedList => s"<ol>${getHTML(table, n)}</ol>"
+        case n: WtUnorderedList => s"<ul>${getHTML(table, n)}</ul>"
+        case n: WtDefinitionList => s"<dl>${getHTML(table, n)}</dl>"
+        case _ => ""
+      }
+      subResult.foldLeft(table)((tbl, nde) => tbl+ nde)
+    }
+    val html = s"<$nType>${ getHTML("", node).mkString("")}</$nType>"
+
+    // Extract sub elements
+    val innerList = parseNode(state, node).filter {
+      case _:WikipediaTable => false
+      case _:WikipediaText => false
+      case _ => true}
+
+    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, nType.toUpperCase(), "", html)) :::  innerList
   }
 
   /** The text nodes are often buried deeply and frequently need to be retrieved.
@@ -493,6 +543,7 @@ object WkpParser {
   private def getTextFromNode(node: WtNode): String = node match {
       case n: WtText => n.getContent.replace("\r", "").replace("\n", "").trim
       case n: WtTagExtension => n.getBody.getContent
+      case n: WtTemplate => ""
       case n: java.util.List[WtNode] if n.size() > 0 => n.map(getTextFromNode).mkString("")
       case _ => ""
   }

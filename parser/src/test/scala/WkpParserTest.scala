@@ -13,11 +13,8 @@
   */
 package scala
 
-import java.io.File
-
 import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
 import org.scalatest._
-
 import scala.io.Source
 
 class WkpParserTest extends FlatSpec {
@@ -55,7 +52,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.templates.size === 52)
     assert(article.links.size === 173)
     assert(article.tags.size === 10)
-    assert(article.tables.size === 1)
+    assert(article.tables.size === 5)
   }
 
   it should "correctly parse headers" in {
@@ -64,7 +61,7 @@ class WkpParserTest extends FlatSpec {
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
-    assert(article.headerSections.size === 5)
+    assert(article.headerSections.size === 6)
     assert(article.texts.size === 5)
     assert(article.templates.size === 1)
     assert(article.links.size === 0)
@@ -88,6 +85,9 @@ class WkpParserTest extends FlatSpec {
 
     // Is Ancillary
     assert(article.headerSections(4).isAncillary === true)
+
+    // Header with template in it
+    assert(article.headerSections(5).title === "HEADER5")
   }
 
 
@@ -102,7 +102,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.templates.size === 0)
     assert(article.links.size === 2)
     assert(article.tags.size === 0)
-    assert(article.tables.size === 0)
+    assert(article.tables.size === 2)
 
     assert(article.texts(0).parentPageId === 39)
     assert(article.texts(0).parentHeaderId === 0)
@@ -112,7 +112,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.texts(1).text === "Header2 text")
     assert(article.texts(2).text === "Header3 text")
     assert(article.texts(3).text === "")
-    assert(article.texts(4).text === "Ordered List Item 1 Ordered List Item 2\n\n\n\n OLWikiLink1 OLWikiLink2")
+    assert(article.texts(4).text === "")
   }
 
   it should "correctly parse links" in {
@@ -240,6 +240,22 @@ class WkpParserTest extends FlatSpec {
     assert(article.tables.head.elementId === 2)
     assert(article.tables.head.caption === "TABLE HEADER")
     assert(article.tables.head.html === "<table><tr><th>HEADER 1</th><th>HEADER2</th></tr><tr><td>CellContents1</td><td>Template in Cell</td></tr><tr><td>CellContents1</td><td>Link in Cell</td></tr></table>")
+  }
+
+  it should "correctly parse lists" in {
+    val config = WkpParserConfiguration(true, true, true, true, true, true)
+    val page = getCaseClass("parser\\src\\resources\\Test_Lists.txt")
+    val article = WkpParser.parseWiki(page, config)
+
+    assert(article.tables.size === 3)
+
+    assert(article.tables.head.tableHtmlType === "UL")
+    assert(article.tables.head.html === "<ul><li>UnOrdered List Item 1UOLWikiLink1</li><li>UnOrdered List Item 2</li><ul><li>UnOrdered List Item 3</li><ul><li>UnOrdered List Item 4</li></ul></ul></ul>")
+    assert(article.tables(1).tableHtmlType === "OL")
+    assert(article.tables(1).html === "<ol><li>OLWikiLink1Text1</li><li>OLWikiLink2Text2</li><li>Text3</li><ol><li>Text4</li><ol><li>Text5</li></ol></ol></ol>")
+    assert(article.tables(2).tableHtmlType === "DL")
+    assert(article.tables(2).html === "<dl><dt>Definition lists</dt><dt>item</dt><dd>definition</dd></dl>")
+
   }
 
   it should "correctly parse blank pages" in {
