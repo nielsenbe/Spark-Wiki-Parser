@@ -36,8 +36,8 @@ sealed trait WikipediaElement
   * @param nameSpace Text name of a wiki's name space. https://en.wikipedia.org/wiki/Wikipedia:Namespace
   * @param pageType Similar to namespace, but Articles are split into ARTICLE, REDIRECT, DISAMBIGUATION, and LIST.
   *                 Otherwise defaults to namespace.
-  * @param lastRevisionId identifier for the last revision.
-  * @param lastRevisionDate Date for when the page was last updated.
+  * @param revisionId identifier for the last revision.
+  * @param revisionDate Date for when the page was last updated.
   * @param parserMessage SUCCESS or the error message
   * @param headerSections Flattened list of wikipedia header sections
   * @param texts Natural language portion of page
@@ -52,8 +52,8 @@ case class WikipediaPage(
   redirect: String,
   nameSpace: String,
   pageType: String,
-  lastRevisionId: Long,
-  lastRevisionDate: Long,
+  revisionId: Long,
+  revisionDate: Long,
   parserMessage: String,
   headerSections: List[WikipediaHeader],
   texts: List[WikipediaText],
@@ -65,6 +65,7 @@ case class WikipediaPage(
 /** Container to hold header section data.
   *
   * @param parentPageId Wikimedia Id for the page
+  * @param parentRevisionId Revision Id element is associated with
   * @param headerId Unique (to the page) identifier for a header.
   * @param title Header text
   * @param level Header depth. 1 is Lead H2 = 2, H3 = 3, etc.
@@ -74,6 +75,7 @@ case class WikipediaPage(
   */
 case class WikipediaHeader(
   parentPageId: Int,
+  parentRevisionId: Int,
   headerId: Int,
   title: String,
   level: Int,
@@ -86,11 +88,13 @@ case class WikipediaHeader(
   * and some junk are to be expected.
   *
   * @param parentPageId Wikimedia Id for the Page
+  * @param parentRevisionId Revision Id element is associated with
   * @param parentHeaderId The header the element is a child of.
   * @param text text fragment
   */
 case class WikipediaText (
   parentPageId: Int,
+  parentRevisionId: Int,
   parentHeaderId: Int,
   text: String) extends WikipediaElement
 
@@ -99,6 +103,7 @@ case class WikipediaText (
   * For example {{Global warming}} will create a table with links that are common to all GW related pages.
   *
   * @param parentPageId Wikimedia Id for the page
+  * @param parentRevisionId Revision Id element is associated with
   * @param parentHeaderId The header the element is a child of.
   * @param elementId Unique (to the page) integer for an element.
   * @param templateType Template name, definition can be found via https://en.wikipedia.org/wiki/Template:[Template name]
@@ -109,6 +114,7 @@ case class WikipediaText (
   */
 case class WikipediaTemplate(
   parentPageId: Int,
+  parentRevisionId: Int,
   parentHeaderId: Int,
   elementId: Int,
   templateType: String,
@@ -118,6 +124,7 @@ case class WikipediaTemplate(
 /** HTTP link to either an internal page or an external page.
   *
   * @param parentPageId Wikimedia Id for the page
+  * @param parentRevisionId Revision Id element is associated with
   * @param parentHeaderId The header the element is a child of.
   * @param elementId Unique (to the page) integer for an element.
   * @param destination URL.  For internal links, the wikipedia title, otherwise the domain.
@@ -131,6 +138,7 @@ case class WikipediaTemplate(
   */
 case class WikipediaLink(
   parentPageId: Int,
+  parentRevisionId: Int,
   parentHeaderId: Int,
   elementId: Int,
   destination: String,
@@ -145,6 +153,7 @@ case class WikipediaLink(
   * For the most part, ref and math are the main ones.
   *
   * @param parentPageId Wikimedia Id for the page
+  * @param parentRevisionId Revision Id element is associated with
   * @param parentHeaderId The header the element is a child of.
   * @param elementId Unique (to the page) integer for an element.
   * @param tag tag name (without brackets)
@@ -152,6 +161,7 @@ case class WikipediaLink(
   */
 case class WikipediaTag (
   parentPageId: Int,
+  parentRevisionId: Int,
   parentHeaderId: Int,
   elementId: Int,
   tag: String,
@@ -160,6 +170,7 @@ case class WikipediaTag (
 /** Contains info about a table.
   *
   * @param parentPageId Wikimedia Id for the page
+  * @param parentRevisionId Revision Id element is associated with
   * @param parentHeaderId The header the element is a child of.
   * @param elementId Unique (to the page) integer for an element.
   * @param tableHtmlType The primary html element of the table TABLE, OL, UL, or DL
@@ -170,6 +181,7 @@ case class WikipediaTag (
   */
 case class WikipediaTable (
   parentPageId: Int,
+  parentRevisionId: Int,
   parentHeaderId: Int,
   elementId: Int,
   tableHtmlType: String,

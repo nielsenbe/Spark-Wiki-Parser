@@ -25,6 +25,7 @@ import org.sweble.wikitext.engine.{PageId, WtEngineImpl}
   */
 class WkpParserState (
   val pageId: Int,
+  val revisionId: Int,
   val pageTitle: String,
   val config: WkpParserConfiguration,
   val swebleEngine: WtEngineImpl,

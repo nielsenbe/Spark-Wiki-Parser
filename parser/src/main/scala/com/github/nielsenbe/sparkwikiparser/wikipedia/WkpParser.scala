@@ -103,7 +103,7 @@ object WkpParser {
       val cp = engine.postprocess(pageId, wikiText, null)
       val parsedPage = cp.getPage
 
-      val state = new WkpParserState(input.id.intValue(), input.title, wkpconfig, engine, pageId)
+      val state = new WkpParserState(input.id.intValue(), revId.intValue(), input.title, wkpconfig, engine, pageId)
       parseNode(state, parsedPage)
     }
 
@@ -114,7 +114,7 @@ object WkpParser {
     }
 
     /* Group elements */
-    val headers = List(WikipediaHeader(input.id.intValue, 0, "LEAD", 0, None, false)) ::: elements.collect { case n: WikipediaHeader => n }
+    val headers = List(WikipediaHeader(input.id.intValue, revId.intValue(), 0, "LEAD", 0, None, false)) ::: elements.collect { case n: WikipediaHeader => n }
     val templates = elements.collect { case n: WikipediaTemplate => n }
     val links = elements.collect { case n: WikipediaLink => n }
     val tags = elements.collect { case n: WikipediaTag => n }
@@ -125,7 +125,7 @@ object WkpParser {
       .collect { case n: WikipediaText => n }
       .groupBy(_.parentHeaderId)
       .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
-      .map(x => WikipediaText(input.id.intValue(), x._1, x._2)).toList
+      .map(x => WikipediaText(input.id.intValue(),revId.intValue(), x._1, x._2)).toList
 
     /* Classify page using namespace and some heuristics */
     val isDisambiguation = templates.exists(x => Set("DISAMBIGUATION", "DISAMBIG", "DISAMBIG-ACRONYM", "DISAMBIGUATION CATEGORY", "DAB").contains(x.templateType))
@@ -286,7 +286,7 @@ object WkpParser {
       "SOURCES", "FOOTNOTES", "PUBLICATIONS", "USERS", "LINKS")
     val isAncillary = ancillaryHeaders.contains(headerName.toUpperCase())
 
-    List(WikipediaHeader(state.pageId, headerId , headerName, level, mainPage, isAncillary)) ::: nodes
+    List(WikipediaHeader(state.pageId, state.revisionId, headerId , headerName, level, mainPage, isAncillary)) ::: nodes
   }
 
   /** Natural language text of an page.  What exactly constitutes this is determined by the parser.
@@ -299,7 +299,7 @@ object WkpParser {
     // Standardize line returns
     val content = node.getContent.replace("\r", "\n")
 
-    List(WikipediaText(state.pageId, state.headerId, content ))
+    List(WikipediaText(state.pageId, state.revisionId, state.headerId, content ))
   }
 
   /** Internal wikimedia links
@@ -327,8 +327,8 @@ object WkpParser {
     val leftSide = destination.split(':') lift 0 getOrElse ""
     val subType  = nameSpaces find(_ == leftSide.toUpperCase()) getOrElse "WIKIPEDIA"
 
-    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
-      List(WikipediaText(state.pageId, state.headerId, text))
+    List(WikipediaLink(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", subType, pageBookmark)) :::
+      List(WikipediaText(state.pageId, state.revisionId, state.headerId, text))
   }
 
   /** Internal Wikimedia image.
@@ -345,8 +345,8 @@ object WkpParser {
     val title = if(node.hasTitle) getTextFromNode(node.getTitle) else ""
     val text = if (title == "") destination else title.split('|').last
 
-    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", "FILE", "")) :::
-      List(WikipediaText(state.pageId, state.headerId, text))
+    List(WikipediaLink(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, destination, text, "WIKIMEDIA", "FILE", "")) :::
+      List(WikipediaText(state.pageId, state.revisionId, state.headerId, text))
   }
 
   /** External link
@@ -376,7 +376,7 @@ object WkpParser {
     def parseURI(uri: String): Try[String] = Try(new URI(uri).getHost)
     val domain = parseURI(cleanDest).getOrElse("INVALID URI")
 
-    List(WikipediaLink(state.pageId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
+    List(WikipediaLink(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
   }
 
   /** HTML entities: > < & " ' etc
@@ -387,7 +387,7 @@ object WkpParser {
     * @return text representation
     */
   private def processHTMLEntity(state: WkpParserState, node: WtXmlEntityRef): List[WikipediaElement] = {
-    List(WikipediaText(state.pageId, state.headerId, node.getResolved))
+    List(WikipediaText(state.pageId, state.revisionId, state.headerId, node.getResolved))
   }
 
   /** HTML elements such as < math > < / math > (spaces added due to docstring)
@@ -406,7 +406,7 @@ object WkpParser {
         case _:WikipediaText => false
         case _ => true}
     else
-      List(WikipediaTag(state.pageId, state.headerId, state.elementIdItr.next, tagName, tagBody))
+      List(WikipediaTag(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, tagName, tagBody))
   }
 
   /** Templates are a special MediaWiki construct that allows code to be shared among pages
@@ -446,7 +446,7 @@ object WkpParser {
     // Determine if template is an info box
     val isInfoBox = templateName.toUpperCase().startsWith("INFOBOX") || Set("TAXOBOX", "GEOBOX").contains(templateName.toUpperCase())
 
-    List(WikipediaTemplate(state.pageId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
+    List(WikipediaTemplate(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
   }
 
   /** Wiki tables
@@ -485,7 +485,7 @@ object WkpParser {
       case _:WikipediaText => false
       case _ => true}
 
-    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, "TABLE", caption, html)) :::  innerList
+    List(WikipediaTable(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, "TABLE", caption, html)) :::  innerList
   }
 
   /** This parse groups lists, ordered lists, and definition lists as tables.  They are converted to their
@@ -532,7 +532,7 @@ object WkpParser {
       case _:WikipediaText => false
       case _ => true}
 
-    List(WikipediaTable(state.pageId, state.headerId, state.elementIdItr.next, nType.toUpperCase(), "", html)) :::  innerList
+    List(WikipediaTable(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, nType.toUpperCase(), "", html)) :::  innerList
   }
 
   /** The text nodes are often buried deeply and frequently need to be retrieved.

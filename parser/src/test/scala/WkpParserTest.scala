@@ -210,7 +210,7 @@ class WkpParserTest extends FlatSpec {
 
     // Escaped characters
     assert(article.templates(6).templateType === "Template with escaped characters")
-    assert(article.templates(6).parameters(0)._2 === "TITLE!TITLE")
+    assert(article.templates(6).parameters(0)._2 === "TITLETITLE")
     assert(article.templates(7).templateType === "!")
 
     // Template nested in table
@@ -239,7 +239,7 @@ class WkpParserTest extends FlatSpec {
     assert(article.tables.head.parentPageId === 39)
     assert(article.tables.head.elementId === 2)
     assert(article.tables.head.caption === "TABLE HEADER")
-    assert(article.tables.head.html === "<table><tr><th>HEADER 1</th><th>HEADER2</th></tr><tr><td>CellContents1</td><td>Template in Cell</td></tr><tr><td>CellContents1</td><td>Link in Cell</td></tr></table>")
+    assert(article.tables.head.html === "<table><tr><th>HEADER 1</th><th>HEADER2</th></tr><tr><td>CellContents1</td><td></td></tr><tr><td>CellContents1</td><td>Link in Cell</td></tr></table>")
   }
 
   it should "correctly parse lists" in {
