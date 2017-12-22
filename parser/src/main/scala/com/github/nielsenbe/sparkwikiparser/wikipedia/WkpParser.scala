@@ -51,13 +51,12 @@ object WkpParser {
 
     Try(parseWikiText(input, wkpconfig)) match {
       case Success(e) => e
-        /* We have millions of pages to parse, don't stop for every error.  Log and move on. */
+      /* We have millions of pages to parse, don't stop for every error.  Log and move on. */
       case Failure(e) => WikipediaPage(
         input.id,
         input.title,
         "",
-        "",
-        "",
+        0,
         0,
         0,
         "Error: " + e.getMessage,
@@ -92,8 +91,6 @@ object WkpParser {
     val revText: Option[InputWikiText] = revision.map(_.text)
     val wikiText: String = revText.map(_._VALUE).getOrElse("")
 
-    val qualifiedNameSpace = getQualifiedNamespace(input.ns)
-
     /* Parse page */
     def parseWikiText(wikiText: String): List[WikipediaElement] = {
       val config = DefaultConfigEnWp.generate()
@@ -114,7 +111,7 @@ object WkpParser {
     }
 
     /* Group elements */
-    val headers = List(WikipediaHeader(input.id.intValue, revId.intValue(), 0, "LEAD", 0, None, false)) ::: elements.collect { case n: WikipediaHeader => n }
+    val headers = List(WikipediaHeader(input.id.intValue, revId.intValue(), 0, "LEAD", 0)) ::: elements.collect { case n: WikipediaHeader => n }
     val templates = elements.collect { case n: WikipediaTemplate => n }
     val links = elements.collect { case n: WikipediaLink => n }
     val tags = elements.collect { case n: WikipediaTag => n }
@@ -127,17 +124,12 @@ object WkpParser {
       .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
       .map(x => WikipediaText(input.id.intValue(),revId.intValue(), x._1, x._2)).toList
 
-    /* Classify page using namespace and some heuristics */
-    val isDisambiguation = templates.exists(x => Set("DISAMBIGUATION", "DISAMBIG", "DISAMBIG-ACRONYM", "DISAMBIGUATION CATEGORY", "DAB").contains(x.templateType))
-    val pageType = getPageType(title, redirect, qualifiedNameSpace, isDisambiguation)
-
     /* Return case class */
     WikipediaPage(
       input.id,
       input.title,
       redirect,
-      qualifiedNameSpace,
-      pageType,
+      input.ns,
       revId,
       lastRevision,
       "SUCCESS",
@@ -147,64 +139,6 @@ object WkpParser {
       links,
       tags,
       tables)
-  }
-
-
-  /** Classify the wikipedia page.
-    * These are logical groupings and are mostly used for filtering pages.
-    *
-    * @param title wikipedia page title
-    * @param redirect redirect string
-    * @param nameSpace namespace
-    * @param isDisambiguation does the page contain any disambiguation templates
-    * @return logical page type
-    */
-  private def getPageType(title: String, redirect: String, nameSpace: String, isDisambiguation: Boolean): String = {
-
-    val titleUpper = title.toUpperCase
-
-    if(!redirect.isEmpty)
-      "REDIRECT"
-    else if(nameSpace != "ARTICLE")
-      nameSpace
-    else if(titleUpper.contains("DISAMBIGUATION"))
-      "DISAMBIGUATION"
-    else if(isDisambiguation)
-      "DISAMBIGUATION"
-    else if(titleUpper.contains("CATEGORY"))
-      "CATEGORY"
-    else if(titleUpper.startsWith("LIST OF"))
-      "LIST"
-    else
-      "ARTICLE"
-  }
-
-  /** Convert name space to text representation.
-    *
-    * @param ns integer from xml file
-    * @return natural language name of namespace
-    */
-  private def getQualifiedNamespace(ns: Long): String = ns match {
-    case 0 => "ARTICLE"
-    case 1 => "TALK"
-    case 2  => "USER"
-    case 4 => "WIKIPEDIA"
-    case 6 => "FILE"
-    case 8 => "MEDIAWIKI"
-    case 10 => "TEMPLATE"
-    case 12 => "HELP"
-    case 14 => "CATEGORY"
-    case 100 => "PORTAL"
-    case 108 => "BOOK"
-    case 118 => "DRAFT"
-    case 446 => "EDUCATION"
-    case 710 => "TIMEDTEXT"
-    case 828 => "MODULE"
-    case 2300 => "GADGET"
-    case 2302 => "GADGET DEFINITION"
-    case -1 => "SPECIAL"
-    case -2 => "MEDIA"
-    case _ => "OTHER"
   }
 
   /** If Sweble doesn't correctly parse a section then we need send it back to the engine.
@@ -227,31 +161,31 @@ object WkpParser {
     * @return List of our simplified nodes
     */
   private def parseNode(state: WkpParserState, nodeList: java.util.List[WtNode]): List[WikipediaElement] = nodeList.toList flatMap {
-      /* Leaf classes */
-      case _: WtHeading => List.empty // Don't parse section headers
-      case n: WtSection => processHeader(state, n)
-      case n: WtText if state.config.parseText => processText(state, n)
-      case n: WtXmlEntityRef  if state.config.parseText => processHTMLEntity(state, n)
-      case n: WtInternalLink if state.config.parseLinks => processWikiLink(state, n)
-      case n: WtImageLink if state.config.parseLinks  => processImageLink(state, n)
-      case n: WtExternalLink if state.config.parseLinks  => processExternalLink(state, n)
-      case n: WtTemplate if state.config.parseTemplates => processTemplate(state, n)
-      case n: WtTagExtension if state.config.parseTags => processTagExtension(state, n)
-      case n: WtTable if state.config.parseTables => processTable(state, n)
-      case n: WtOrderedList if state.config.parseTables => processList(state, n, "ol")
-      case n: WtUnorderedList if state.config.parseTables => processList(state, n, "ul")
-      case n: WtDefinitionList if state.config.parseTables => processList(state, n, "dl")
-      /* Container classes */
-      case n: WtNodeListImpl => parseNode(state, n)
-      case n: WtTableRow => parseNode(state, n)
-      case n: WtTableHeader => parseNode(state, n)
-      case n: WtTableCell => parseNode(state, n)
-      case n: WtTableImplicitTableBody => parseNode(state, n)
-      case n: WtTemplateArgument => parseNode(state, n)
-      case n: WtXmlElement => parseNode(state, n)
-      case n: WtContentNode => parseNode(state, n)
-      case _ => List.empty
-    }
+    /* Leaf classes */
+    case _: WtHeading => List.empty // Don't parse section headers
+    case n: WtSection => processHeader(state, n)
+    case n: WtText if state.config.parseText => processText(state, n)
+    case n: WtXmlEntityRef  if state.config.parseText => processHTMLEntity(state, n)
+    case n: WtInternalLink if state.config.parseLinks => processWikiLink(state, n)
+    case n: WtImageLink if state.config.parseLinks  => processImageLink(state, n)
+    case n: WtExternalLink if state.config.parseLinks  => processExternalLink(state, n)
+    case n: WtTemplate if state.config.parseTemplates => processTemplate(state, n)
+    case n: WtTagExtension if state.config.parseTags => processTagExtension(state, n)
+    case n: WtTable if state.config.parseTables => processTable(state, n)
+    case n: WtOrderedList if state.config.parseTables => processList(state, n, "ol")
+    case n: WtUnorderedList if state.config.parseTables => processList(state, n, "ul")
+    case n: WtDefinitionList if state.config.parseTables => processList(state, n, "dl")
+    /* Container classes */
+    case n: WtNodeListImpl => parseNode(state, n)
+    case n: WtTableRow => parseNode(state, n)
+    case n: WtTableHeader => parseNode(state, n)
+    case n: WtTableCell => parseNode(state, n)
+    case n: WtTableImplicitTableBody => parseNode(state, n)
+    case n: WtTemplateArgument => parseNode(state, n)
+    case n: WtXmlElement => parseNode(state, n)
+    case n: WtContentNode => parseNode(state, n)
+    case _ => List.empty
+  }
 
   /** Header title (==Title1== = H2)
     *
@@ -275,18 +209,7 @@ object WkpParser {
     // Get nested nodes
     val nodes = parseNode(state, node)
 
-    // Check if a heading has a Main Page template
-    def isMainPage(node: WikipediaTemplate) = Set("MAIN", "MAIN ARTICLE").contains(node.templateType.toUpperCase())
-    val mainPage = nodes.take(3).collect {
-      case n: WikipediaTemplate if isMainPage(n) => if (n.parameters.nonEmpty) n.parameters.head._2 else ""
-    } lift 0
-
-    // Determine if it is an ancillary section
-    val ancillaryHeaders = Set("REFERENCES", "EXTERNAL LINKS", "SEE ALSO", "NOTES", "BIBLIOGRAPHY", "FURTHER READING",
-      "SOURCES", "FOOTNOTES", "PUBLICATIONS", "USERS", "LINKS")
-    val isAncillary = ancillaryHeaders.contains(headerName.toUpperCase())
-
-    List(WikipediaHeader(state.pageId, state.revisionId, headerId , headerName, level, mainPage, isAncillary)) ::: nodes
+    List(WikipediaHeader(state.pageId, state.revisionId, headerId , headerName, level)) ::: nodes
   }
 
   /** Natural language text of an page.  What exactly constitutes this is determined by the parser.
@@ -443,10 +366,7 @@ object WkpParser {
       case _:WikipediaText => false
       case _ => true}
 
-    // Determine if template is an info box
-    val isInfoBox = templateName.toUpperCase().startsWith("INFOBOX") || Set("TAXOBOX", "GEOBOX").contains(templateName.toUpperCase())
-
-    List(WikipediaTemplate(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, templateName, isInfoBox, parameterList)) ::: innerNodes ::: linkNodes
+    List(WikipediaTemplate(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, templateName, parameterList)) ::: innerNodes ::: linkNodes
   }
 
   /** Wiki tables
@@ -541,10 +461,10 @@ object WkpParser {
     * @return Concatenated text and tag nodes
     */
   private def getTextFromNode(node: WtNode): String = node match {
-      case n: WtText => n.getContent.replace("\r", "").replace("\n", "").trim
-      case n: WtTagExtension => n.getBody.getContent
-      case n: WtTemplate => ""
-      case n: java.util.List[WtNode] if n.size() > 0 => n.map(getTextFromNode).mkString("")
-      case _ => ""
+    case n: WtText => n.getContent.replace("\r", "").replace("\n", "").trim
+    case n: WtTagExtension => n.getBody.getContent
+    case n: WtTemplate => ""
+    case n: java.util.List[WtNode] if n.size() > 0 => n.map(getTextFromNode).mkString("")
+    case _ => ""
   }
 }

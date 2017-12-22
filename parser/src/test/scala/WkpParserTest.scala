@@ -72,19 +72,11 @@ class WkpParserTest extends FlatSpec {
     assert(article.headerSections.head.headerId === 0)
     assert(article.headerSections.head.title === "LEAD")
     assert(article.headerSections.head.level === 0)
-    assert(article.headerSections.head.mainPage === None)
-    assert(article.headerSections.head.isAncillary === false)
 
     // Assert nested headers are correctly formatted
     assert(article.headerSections(1).headerId === 1)
     assert(article.headerSections(1).title === "HEADER2")
     assert(article.headerSections(1).level === 1)
-
-    // Main article
-    assert(article.headerSections(2).mainPage === Some("Albedo"))
-
-    // Is Ancillary
-    assert(article.headerSections(4).isAncillary === true)
 
     // Header with template in it
     assert(article.headerSections(5).title === "HEADER5")
@@ -182,7 +174,6 @@ class WkpParserTest extends FlatSpec {
     assert(article.templates(0).parentHeaderId === 0)
     assert(article.templates(0).elementId === 0)
     assert(article.templates(0).templateType === "No Param Template")
-    assert(article.templates(0).isInfoBox === false)
     assert(article.templates(0).parameters.size === 0)
 
     // Named parameter
