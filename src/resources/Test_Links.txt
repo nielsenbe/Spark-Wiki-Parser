@@ -1,0 +1,7 @@
+[[WikiLink]]
+[[WikiLink|TITLE TEXT]]
+[[File:Test.svg|thumb|IMAGE TEXT]]
+[[Category:Climate forcing]]
+[[WikiLink#PAGEBOOKMARK]]
+[https://nsidc.org/cryosphere/seaice/processes/albedo.html EXTERNAL TEXT]
+[http:$BAD:URL]
