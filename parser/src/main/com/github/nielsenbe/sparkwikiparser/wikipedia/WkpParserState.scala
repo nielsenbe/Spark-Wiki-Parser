@@ -1,4 +1,4 @@
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 import org.sweble.wikitext.engine.{PageId, WtEngineImpl}
 

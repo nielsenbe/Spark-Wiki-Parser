@@ -11,7 +11,7 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Converts Wikitext to a simplified tree structure
   *
@@ -29,6 +29,7 @@ import java.net.URI
 import java.time.format.DateTimeFormatter
 import java.time.{ZoneId, ZonedDateTime}
 
+import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
 import org.sweble.wikitext.engine.utils.DefaultConfigEnWp
 import org.sweble.wikitext.engine.{PageId, PageTitle, WtEngineImpl}
 import org.sweble.wikitext.parser.nodes.WtNodeList.WtNodeListImpl
@@ -36,7 +37,6 @@ import org.sweble.wikitext.parser.nodes._
 
 import scala.collection.JavaConversions._
 import scala.util.{Failure, Success, Try}
-
 
 object WkpParser {
   /** Converts xml class to a simple abstract tree object

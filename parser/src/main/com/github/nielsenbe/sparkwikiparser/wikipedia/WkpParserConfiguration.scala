@@ -1,4 +1,4 @@
-package main.scala.org.bnielsen.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 case class WkpParserConfiguration(
   parseText: Boolean,

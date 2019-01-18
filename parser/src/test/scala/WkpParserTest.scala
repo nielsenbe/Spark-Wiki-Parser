@@ -13,8 +13,8 @@
   */
 package scala
 
-import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
 import org.scalatest._
+
 import scala.io.Source
 
 class WkpParserTest extends FlatSpec {

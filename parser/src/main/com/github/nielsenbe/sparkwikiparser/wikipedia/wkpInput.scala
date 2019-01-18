@@ -11,7 +11,7 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Simple case classes to serialize a MediaWiki dump.
   * These should correspond one to one with the XML structure (for the elements we care about).
