@@ -11,7 +11,7 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** These classes represent the simplified abstract syntax tree for a wikipedia page.
   * The goal behind these classes was to flatten the initial deep abstract syntax tree into something more manageable.

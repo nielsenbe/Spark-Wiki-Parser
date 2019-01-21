@@ -3,7 +3,9 @@ package com.github.nielsenbe.sparkwikiparser.wikipedia
 import org.sweble.wikitext.engine.{PageId, WtEngineImpl}
 
 class WkpParserState (
-  val articleId: Int,
+  val pageId: Int,
+  val revisionId: Int,
+  val title: String,
   val config: WkpParserConfiguration,
   val swebleEngine: WtEngineImpl,
   val sweblePage: PageId

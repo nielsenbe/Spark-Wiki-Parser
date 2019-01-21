@@ -29,7 +29,6 @@ import java.net.URI
 import java.time.format.DateTimeFormatter
 import java.time.{ZoneId, ZonedDateTime}
 
-import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
 import org.sweble.wikitext.engine.utils.DefaultConfigEnWp
 import org.sweble.wikitext.engine.{PageId, PageTitle, WtEngineImpl}
 import org.sweble.wikitext.parser.nodes.WtNodeList.WtNodeListImpl
@@ -104,7 +103,7 @@ object WkpParser {
       parseNode(state, parsedPage)
     }
 
-    // Only parse if it is not a redirect or text is empty
+    // Only parse if it is not a redirect or text is not empty
     val elements = redirect match {
       case "" if wikiText.length > 0 => parseWikiText(wikiText)
       case _ => List.empty
@@ -236,10 +235,11 @@ object WkpParser {
     // Check if link is using bookmark [Page#SectionHeading]
     val hashSplit = node.getTarget.getAsString.split('#')
     val destination = hashSplit lift 0 match {
-      case Some(dest) if dest == "" => state.pageTitle
+      case Some(dest) if dest == "" => state.title
       case Some(dest) => dest
       case None => ""
     }
+
     val pageBookmark = hashSplit lift 1 getOrElse ""
 
     // If title is empty, use destination
@@ -290,7 +290,7 @@ object WkpParser {
 
   // Polymorphic implementation
   private def processExternalLink(state: WkpParserState, title: String, destination: String): List[WikipediaElement] = {
-    // check for bookmark
+    // check for bo`okmark
     val hashSplit = destination.split('#')
     val cleanDest = hashSplit(0)
     val pageBookmark = hashSplit lift 1 getOrElse ""
