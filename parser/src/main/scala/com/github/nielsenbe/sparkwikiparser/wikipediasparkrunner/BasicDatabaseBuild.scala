@@ -1,8 +1,5 @@
+import com.github.nielsenbe.sparkwikiparser.wikipediasparkrunner.ParserWorkflow
 import org.apache.spark.sql.SparkSession
-import com.github.nielsenbe.sparkwikiparser.wikipedia._
-import com.github.nielsenbe.sparkwikiparser.wikipediasparkrunner.{CreateDBObjects, InitialWikiParse, ParserWorkflow}
-import org.apache.spark.sql.types._
-import org.apache.spark.storage.StorageLevel
 
  object BasicDatabaseBuild {
     def main(args:Array[String]): Unit ={

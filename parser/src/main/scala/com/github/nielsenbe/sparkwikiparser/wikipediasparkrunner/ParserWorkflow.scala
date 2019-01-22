@@ -5,7 +5,7 @@ import org.apache.spark.storage.StorageLevel
 
 class ParserWorkflow {
   def ParseFileAndCreateDatabase(spark: SparkSession, sourceFile: String, destDB: String): Unit = {
-
+    println("Starting initial parse of Wikitext")
     /* Run through initial parse */
     val parsedItems = new InitialWikiParse().GetWikipediaAsDataSet(spark, sourceFile)
 
@@ -14,6 +14,7 @@ class ParserWorkflow {
 
     /*-- Print parse status --*/
     val pageCount = items.count
+    println("Wikitext parsing complete")
     println(s"$pageCount in total parsed")
 
     val errors = items.filter(_.parserMessage != "SUCCESS")
@@ -22,9 +23,11 @@ class ParserWorkflow {
     println(s" $errorCount failed")
 
     /*-- Clean the results and store them in parquet --*/
+    println("Starting flatten/clean process")
     val dbRunner = new CreateDBObjects()
 
     dbRunner.CreateBaseAndViews(spark, items, destDB)
+
 
     dbRunner.CreateAndPersistDBTables(spark, "wkp_page_simple", destDB)
     dbRunner.CreateAndPersistDBTables(spark, "wkp_redirect", destDB)
@@ -39,5 +42,9 @@ class ParserWorkflow {
     dbRunner.CreateAndPersistDBTables(spark, "wkp_page", destDB)
 
     println("Wikipedia Database Creation Complete")
+  }
+
+  def printVersion(): Unit = {
+    println("Version 1.4")
   }
 }

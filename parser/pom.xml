@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.nielsenbe</groupId>
     <artifactId>spark-wiki-parser</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.6</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Parses a Wiki dump file using Spark.</description>
     <url>https://github.com/nielsenbe/Spark-Wiki-Parser</url>
@@ -61,6 +61,8 @@
     </scm>
 
     <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

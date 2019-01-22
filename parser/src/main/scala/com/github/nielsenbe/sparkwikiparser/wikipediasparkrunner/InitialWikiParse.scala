@@ -1,11 +1,12 @@
 package com.github.nielsenbe.sparkwikiparser.wikipediasparkrunner
 
-import com.github.nielsenbe.sparkwikiparser.wikipedia._
-import org.apache.spark.sql.{Dataset, SparkSession}
+import com.github.nielsenbe.sparkwikiparser.wikipedia.{InputPage, WikipediaPage, WkpParser, WkpParserConfiguration}
 import org.apache.spark.sql.types.{LongType, StringType, StructType}
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 class InitialWikiParse {
   def GetWikipediaAsDataSet(spark: SparkSession, source: String): Dataset[WikipediaPage] = {
+
     /*-- Create Schema --*/
     val schema = new StructType()
       .add("id",LongType,true)
@@ -43,6 +44,7 @@ class InitialWikiParse {
       .option("rowTag", "page")
       .schema(schema)
       .load(source)
+      .limit(1000)
       .as[InputPage]
 
     /*-- Parse the file --*/
