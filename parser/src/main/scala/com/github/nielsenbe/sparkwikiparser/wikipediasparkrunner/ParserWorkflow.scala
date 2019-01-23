@@ -4,7 +4,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.storage.StorageLevel
 
 class ParserWorkflow {
-  def ParseFileAndCreateDatabase(spark: SparkSession, sourceFile: String, destDB: String): Unit = {
+  def ParseFileAndCreateDatabase(spark: SparkSession, sourceFile: String, destDB: String, dbFormat: String): Unit = {
     println("Starting initial parse of Wikitext")
     /* Run through initial parse */
     val parsedItems = new InitialWikiParse().GetWikipediaAsDataSet(spark, sourceFile)
@@ -29,17 +29,17 @@ class ParserWorkflow {
     dbRunner.CreateBaseAndViews(spark, items, destDB)
 
 
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_page_simple", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_redirect", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_tag", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_table", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_template", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_template_param", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_text", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_link_external", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_link_wiki", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_header", destDB)
-    dbRunner.CreateAndPersistDBTables(spark, "wkp_page", destDB)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_page_simple", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_redirect", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_tag", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_table", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_template", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_template_param", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_text", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_link_external", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_link_wiki", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_header", destDB, dbFormat)
+    dbRunner.CreateAndPersistDBTables(spark, "wkp_page", destDB, dbFormat)
 
     println("Wikipedia Database Creation Complete")
   }
