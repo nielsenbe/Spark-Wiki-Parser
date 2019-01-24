@@ -11,18 +11,23 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package scala
+package wikipedia
 
-import main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia._
+import java.io.InputStream
+
 import org.scalatest._
+import com.github.nielsenbe.sparkwikiparser.wikipedia._
+
 import scala.io.Source
 
 class WkpParserTest extends FlatSpec {
 
   private def getCaseClass(fileURI: String): InputPage = {
     // Get wiki text
+    val stream : InputStream = getClass.getResourceAsStream(fileURI)
+    val text = Source.fromInputStream(stream).mkString
     val wikiText = InputWikiText(
-      Source.fromFile(fileURI).mkString,
+      text,
       "preserve")
 
     val revision =  InputRevision(
@@ -43,7 +48,7 @@ class WkpParserTest extends FlatSpec {
 
   "A WkpParser" should "produce the required element counts" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Actual.txt")
+    val page = getCaseClass("/Test_Actual.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -57,7 +62,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse headers" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Headers.txt")
+    val page = getCaseClass("/Test_Headers.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -85,7 +90,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse text" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Text.txt")
+    val page = getCaseClass("/Test_Text.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -109,7 +114,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse links" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Links.txt")
+    val page = getCaseClass("/Test_Links.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -158,7 +163,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse templates" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Templates.txt")
+    val page = getCaseClass("/Test_Templates.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -216,7 +221,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse tables" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Tables.txt")
+    val page = getCaseClass("/Test_Tables.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.parserMessage === "SUCCESS")
@@ -235,7 +240,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse lists" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Lists.txt")
+    val page = getCaseClass("/Test_Lists.txt")
     val article = WkpParser.parseWiki(page, config)
 
     assert(article.tables.size === 3)
@@ -251,7 +256,7 @@ class WkpParserTest extends FlatSpec {
 
   it should "correctly parse blank pages" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
-    val page = getCaseClass("parser\\src\\resources\\Test_Blank.txt")
+    val page = getCaseClass("/Test_Blank.txt")
     val article = WkpParser.parseWiki(page, config)
   }
 }

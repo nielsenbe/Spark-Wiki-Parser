@@ -1,17 +1,4 @@
-/** Copyright 2017
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  * http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
-package main.scala.com.github.nielsenbe.sparkwikiparser.wikipedia
+package com.github.nielsenbe.sparkwikiparser.wikipedia
 
 /** Converts Wikitext to a simplified tree structure
   *
@@ -36,7 +23,6 @@ import org.sweble.wikitext.parser.nodes._
 
 import scala.collection.JavaConversions._
 import scala.util.{Failure, Success, Try}
-
 
 object WkpParser {
   /** Converts xml class to a simple abstract tree object
@@ -104,7 +90,7 @@ object WkpParser {
       parseNode(state, parsedPage)
     }
 
-    // Only parse if it is not a redirect or text is empty
+    // Only parse if it is not a redirect or text is not empty
     val elements = redirect match {
       case "" if wikiText.length > 0 => parseWikiText(wikiText)
       case _ => List.empty
@@ -236,10 +222,11 @@ object WkpParser {
     // Check if link is using bookmark [Page#SectionHeading]
     val hashSplit = node.getTarget.getAsString.split('#')
     val destination = hashSplit lift 0 match {
-      case Some(dest) if dest == "" => state.pageTitle
+      case Some(dest) if dest == "" => state.title
       case Some(dest) => dest
       case None => ""
     }
+
     val pageBookmark = hashSplit lift 1 getOrElse ""
 
     // If title is empty, use destination
@@ -290,7 +277,7 @@ object WkpParser {
 
   // Polymorphic implementation
   private def processExternalLink(state: WkpParserState, title: String, destination: String): List[WikipediaElement] = {
-    // check for bookmark
+    // check for bo`okmark
     val hashSplit = destination.split('#')
     val cleanDest = hashSplit(0)
     val pageBookmark = hashSplit lift 1 getOrElse ""
