@@ -448,7 +448,7 @@ object WkpParser {
     * @return Concatenated text and tag nodes
     */
   private def getTextFromNode(node: WtNode): String = node match {
-    case n: WtText => n.getContent.replace("\r", "").replace("\n", "").trim
+    case n: WtText => n.getContent/*.replace("\r", "").replace("\n", "").trim*/
     case n: WtTagExtension => n.getBody.getContent
     case n: WtTemplate => ""
     case n: java.util.List[WtNode] if n.size() > 0 => n.map(getTextFromNode).mkString("")
