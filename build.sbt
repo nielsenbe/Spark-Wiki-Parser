@@ -1,6 +1,6 @@
 name := "spark-wiki-parser"
 organization := "com.github.nielsenbe"
-version := "0.9"
+version := "0.10"
 description := "Parses a Wiki dump file using Spark."
 homepage := Some(url("https://github.com/nielsenbe/Spark-Wiki-Parser"))
 

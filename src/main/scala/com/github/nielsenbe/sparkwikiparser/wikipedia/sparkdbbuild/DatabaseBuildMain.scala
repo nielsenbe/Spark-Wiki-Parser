@@ -16,9 +16,11 @@ import org.apache.spark.sql.SparkSession
     val conf = new ParserArguments(args)
     if (args.length == 0 || args(0) == "--help") conf.printHelp()
 
+    val cconf = new Arguments(conf.dumpFile(), conf.destFolder(), conf.destFormat())
+
     val spark = SparkSession.builder.appName("BasicDatabaseBuild").getOrCreate()
 
-    val wf = new DatabaseBuild()
-    wf.parseFileAndCreateDatabase(spark, conf)
+    val wf = new DatabaseBuildFull()
+    wf.parseFileAndCreateDatabase(spark, cconf)
     }
 }

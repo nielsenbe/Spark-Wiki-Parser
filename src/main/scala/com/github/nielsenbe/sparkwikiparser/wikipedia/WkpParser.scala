@@ -62,7 +62,6 @@ object WkpParser {
     * @return WikipediaPage
     */
   private def parseWikiText(input: InputPage, wkpconfig: WkpParserConfiguration): WikipediaPage = {
-
     /* Parse top level elements */
     val title: String = Option(input.title).getOrElse("EMPTY")
     val redirectValue: String = Option(input.redirect).map(x => x._title).getOrElse("")
@@ -85,7 +84,6 @@ object WkpParser {
       val pageId = new PageId(pageTitle, input.id)
       val cp = engine.postprocess(pageId, wikiText, null)
       val parsedPage = cp.getPage
-
       val state = new WkpParserState(input.id.intValue(), revId.intValue(), input.title, wkpconfig, engine, pageId)
       parseNode(state, parsedPage)
     }
@@ -107,7 +105,7 @@ object WkpParser {
     val text = elements
       .collect { case n: WikipediaText => n }
       .groupBy(_.parentHeaderId)
-      .mapValues(x => x.map(_.text).mkString("").stripMargin('\n').trim)
+      .mapValues(x => x.map(_.text).mkString(""))
       .map(x => WikipediaText(input.id.intValue(),revId.intValue(), x._1, x._2)).toList
 
     /* Return case class */
@@ -206,7 +204,7 @@ object WkpParser {
     */
   private def processText(state: WkpParserState, node: WtText): List[WikipediaElement] = {
     // Standardize line returns
-    val content = node.getContent.replace("\r", "\n")
+    val content = node.getContent
 
     List(WikipediaText(state.pageId, state.revisionId, state.headerId, content ))
   }

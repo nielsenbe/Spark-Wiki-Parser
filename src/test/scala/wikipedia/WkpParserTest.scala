@@ -51,11 +51,12 @@ class WkpParserTest extends FlatSpec {
     val page = getCaseClass("/Test_Actual.txt")
     val article = WkpParser.parseWiki(page, config)
 
+
     assert(article.parserMessage === "SUCCESS")
     assert(article.headerSections.size === 22)
     assert(article.texts.size === 22)
     assert(article.templates.size === 52)
-    assert(article.links.size === 173)
+    assert(article.links.size === 158)
     assert(article.tags.size === 10)
     assert(article.tables.size === 5)
   }
