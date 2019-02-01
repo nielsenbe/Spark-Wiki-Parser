@@ -79,8 +79,8 @@ class ParserFunctions {
     * @param args Arguments supplied to program
     */
   def persistToStaging(spark: SparkSession, items: sql.DataFrame, viewName: String, args: Arguments) {
-    items.write.mode("overwrite").parquet(args.destFolder + "stg/" + viewName)
-    val staged = spark.read.parquet(args.destFolder + "stg/" + viewName)
+    items.write.mode("overwrite").parquet(args.destFolder + "stg/flat/" + viewName)
+    val staged = spark.read.parquet(args.destFolder + "stg/flat/" + viewName)
     staged.createOrReplaceTempView(viewName)
   }
 
@@ -97,11 +97,12 @@ class ParserFunctions {
     // Get view definition from file and then create it
     val stream : InputStream = getClass.getResourceAsStream(s"/$fileName.sql")
     val sql= Source.fromInputStream(stream).mkString
-    spark
-      .sql(sql)
+    spark.sql(sql)
+
+    spark.table(fileName)
       .write
       .format(args.destFormat)
       .mode("overwrite")
-      .save(args.destFolder)
+      .save(args.destFolder + fileName)
   }
 }

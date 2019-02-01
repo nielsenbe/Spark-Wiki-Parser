@@ -35,8 +35,16 @@ class DatabaseBuildFull {
     /*-- Clean the results and store them in parquet --*/
     println("Starting flatten/clean process")
 
-    items.createOrReplaceTempView("items")
     val persist = parser.persistToStaging(spark, _:sql.DataFrame, _:String, args)
+    persist(items.toDF().select(
+        $"id",
+        $"title",
+        $"redirect",
+        $"nameSpace",
+        $"revisionId",
+        $"revisionDate",
+        $"parserMessage"),
+      "items")
     persist(items.flatMap(_.headerSections).toDF(), "headers")
     persist(items.flatMap(_.templates).toDF(), "templates")
     persist(items.flatMap(_.tables).toDF(), "tables")

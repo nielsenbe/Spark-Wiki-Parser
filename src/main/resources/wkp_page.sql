@@ -67,6 +67,7 @@ SELECT
     revision_date               AS revision_date,
     hdr.text_length             AS text_length,
     hdr.wiki_link_count         AS wiki_link_count,
+    lnk.incoming_wiki_link_count AS incoming_wiki_link_count,
     hdr.template_count          AS template_count,
     hdr.cleanup_template_count  AS cleanup_template_count
 FROM
@@ -84,5 +85,13 @@ LEFT JOIN(
         parent_page_id
     ) hdr
     ON  hdr.parent_page_id = pge.id
-    
-    
+LEFT JOIN(
+    SELECT
+        destination_page_id,
+        COUNT(*) as incoming_wiki_link_count
+    FROM
+        wkp_link_wiki
+    GROUP BY
+        destination_page_id
+    ) lnk
+    ON lnk.destination_page_id = pge.id

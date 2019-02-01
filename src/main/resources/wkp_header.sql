@@ -2,6 +2,7 @@ CREATE OR REPLACE TEMPORARY VIEW wkp_header
 AS
 SELECT
     hdr.parentPageId    AS parent_page_id,
+    hdr.parentRevisionId AS parent_revision_id,
     hdr.headerId        AS header_id,
     hdr.title           AS title,
     hdr.level           AS header_level,
