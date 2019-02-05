@@ -1,0 +1,460 @@
+{{Use dmy dates|date=September 2015}}
+{{Infobox horse race
+|name            = 2016 Epsom Derby
+|horse race      = [[Epsom Derby]]
+|image_name      =
+|caption         =
+|location        = [[Epsom Downs Racecourse]]
+|date            = 4 June 2016
+|winning horse   = [[Harzand (horse)|Harzand]]
+|starting price  = 13/2
+|winning jockey  = [[Pat Smullen]]
+|winning trainer = [[Dermot Weld]]
+|winning owner   = [[Aga Khan IV]]
+|conditions      = Good to soft
+|previous=[[2015 Epsom Derby|2015]]
+|next=[[2017 Epsom Derby|2017]]
+}}
+{{Jockey colours header
+| name = Epsom Derby 2016}}
+{{Jockey colours row
+| year = 1-2-3
+| image1 = File:Owner H H Aga Khan.svg
+| alt1 = Green, red epaulets
+| caption1 = Harzand
+| image2 = File:Owner Mrs John Magnier.svg
+| alt2 = Dark blue
+| caption2 = Us Army Ranger
+| image3 = File:Owner Michael Tabor.svg
+| alt3 = Royal blue, orange disc, striped sleeves and cap
+| caption3 = Idaho
+}}
+|}
+{| class="collapsible collapsed" cellpadding="0" cellspacing="0" style="clear:right; float:right; text-align:center; font-weight:bold;" width="280px"
+! colspan="3" style="border:1px solid black; background-color: #77DD77;" | Also Ran
+{{Jockey colours row
+| year = 4-5-6
+| image1 = File:Owner Lady Bamford.svg
+| alt1 = Maroon
+| caption1 = Wings of Desire
+| image2 = File:Owner Chelsea Thoroughbreds.svg
+| alt2 = Light blue, royal blue sleeves, white cap
+| caption2 = Humphrey Bogart
+| image3 = File:Owner Mr R J Arculli.svg
+| alt3 = Light blue and red diamonds, light blue sleeves, red cap, light blue diamond
+| caption3 = Red Verdon
+}}
+{{Jockey colours row
+| year = 7-8-9
+| image1 = File:Owner Miss K Rausing.svg
+| alt1 = White, emerald green hoops, white sleeves and cap
+| caption1 = Algometer
+| image2 = File:Owner Godolphin.svg
+| alt2 = Royal blue
+| caption2 = Cloth Of Stars
+| image3 = File:Owner Mr Hamdan Al Maktoum.svg
+| alt3 = Royal blue, white epaulets, striped cap
+| caption3 = Massaat
+}}
+{{Jockey colours row
+| year = 10-11-12
+| image1 = File:Owner Mr Saeed Suhail.svg
+| alt1 = Royal blue, yellow chevron, yellow cap, royal blue spots
+| caption1 = Across The Stars
+| image2 = File:Owner Mrs Fitri Hay.svg
+| alt2 = Pink, emerald green chevron, halved sleeves, pink and emerald green quartered cap
+| caption2 = Deauville
+| image3 = File:Owner Flaxman Stables Ireland Ltd.svg
+| alt3 = Dark blue, light blue cross belts, diabolo on sleeves, white cap
+| caption3 = Ulysses
+}}
+{{Jockey colours row
+| year = 13-14-15
+| image1 = File:Owner Mr Hubert John Strecker.svg
+| alt1 = Pink, red epaulets, white sleeves, orange cap
+| caption1 = Biodynamic
+| image2 = File:Owner Michael Tabor_blue_cap.svg
+| alt2 = Royal Blue, Orange Disc, Striped Sleeves, Royal Blue cap
+| caption2 = Port Douglas
+| image3 = File:Owner Mr Derrick Smith.svg
+| alt3 = Purple, white seams, striped sleeves, purple cap
+| caption3 = Shogun
+}}
+{{Jockey colours row
+| year = 16
+| image1 = File:Owner Godolphin_white _cap.svg
+| alt1 = Royal blue, white cap
+| caption1 = Moonlight Magic
+| image2 = File: (at)-white.svg
+| alt2 = 16 Ran
+| caption2 = 16 Ran
+| image3 = File: (at)-white.svg
+| alt3 = 
+| caption3 = 2m 40.09s
+}}
+{{Jockey colours footer}}
+The '''2016 Epsom Derby''' was the 237th annual running of the [[Epsom Derby|Derby]] [[Horse racing|horse race]] and took place at [[Epsom Downs Racecourse]] on 4 June 2016. The race was won by the [[Aga Khan IV|Aga Khan]]'s [[Harzand (horse)|Harzand]], ridden by [[Pat Smullen]] and trained in Ireland by [[Dermot Weld]]. Harzand's victory was the first in the race for his jockey and trainer,<ref>{{cite web|url=https://www.theguardian.com/sport/2016/jun/04/harzand-overcomes-pre-race-scare-win-epsom-derby-2016|title=Harzand overcomes pre-race scare to win the Derby for Pat Smullen|author=Chris Cook|date=4 June 2016|publisher=[[The Guardian]]}}</ref> and the fifth for his owner, who had prior wins with [[Shergar]], [[Shahrastani]], [[Kahyasi]] and [[Sinndar]].
+
+== Race synopsis ==
+
+=== Entries and race build-up ===
+The initial entry for the 2016 Epsom Derby, announced in December 2014, consisted of 475 [[yearling (horse)|yearlings]]. Amongst the entries was a brother to the unbeaten [[Frankel (horse)|Frankel]], and a son of [[Midday (horse)|Midday]].<ref>{{cite web|title=Frankel's brother among entries for 2016 Derby at Epsom|url=https://www.bbc.co.uk/sport/0/horse-racing/30417460|website=BBC Sport|accessdate=30 September 2015}}</ref> The number of entries was an increase of 66 on the initial entry for the 2015 race, and included 53 horses from the [[Godolphin Racing]] organisation and 77 from the [[Coolmore Stud]]. The number of potential runners was reduced to 136 at the first scratching date in March 2016 with Foundation (trained by [[John Gosden]]) and Midterm, the son of Midday, ([[Michael Stoute]]) heading the betting market at [[fractional odds|odds]] of 12 to 1. [[Aidan O'Brien]] trained 36 of the runners left in the race.<ref name="EpDown1">{{cite web|title=136 go forward for 2016 Investec Derby|url=http://epsom.thejockeyclub.co.uk/pr-policies/press-releases/136-go-forward-for-2016-investec-derby|website=Epsom Downs Racecourse|accessdate=20 March 2016}}</ref> A further 9 horses were added at the second entry stage in April 2016 at a cost of £8,000 per entry. The second entries included Carntop, bred and owned by [[Charles, Prince of Wales]] and [[Camilla, Duchess of Cornwall]].<ref>{{cite web|title=Prince of Wales and Duchess of Cornwall have entry in Epsom Derby|url=http://www.skysports.com/racing/news/12040/10233552/prince-of-wales-and-duchess-of-cornwall-have-entry-in-epsom-derby|website=Sky Sports|accessdate=8 April 2016}}</ref><ref name="EpDown1 "/>
+
+The field began to take its final shape on 20 May when twenty-two horses were left entered at the final forfeit stage. Amongst those remaining in the race were trial winners US Army Ranger ([[Chester Vase]]), Harzand ([[Ballysax Stakes]]) and Moonlight Magic ([[Derrinstown Stud Derby Trial]]) along with the Classic winner [[The Gurkha]] ([[Poule d'Essai des Poulains]]) and [[Awtaad]], who won the [[Irish 2,000 Guineas]] just after the confirmations were announced. Thirteen of the remaining entries were trained in Ireland, including eight from Aidan O'Brien's stable.<ref>{{cite web|last1=Sargeant|first1=Karen|title=Epsom Derby 2016: 22 go forward for Investec Derby|url=http://eclipsemagazine.co.uk/epsom-derby-2016-22-go-forward-investec-derby/|website=Eclipse Magazine|accessdate=24 May 2016}}</ref>
+
+Final confirmations for the race took place on Monday 30 May leaving a potential field of eighteen runners. [[Wings of Desire (horse)|Wings of Desire]], Cloth of Stars, Humphrey Bogart and Red Verdon were supplemented at a cost of £75,000 and the additional entries made the prize money £1.45m and meant that the 2016 Derby would be the most valuable horse race ever staged in Great Britain.<ref>{{cite web|title=Epsom Derby: Wings Of Desire & Cloth Of Stars among late entries|url=https://www.bbc.co.uk/sport/horse-racing/36412946|website=BBC Sport|accessdate=31 May 2016}}</ref> [[Awtaad]] and [[The Gurkha]] were both withdrawn at this stage. Some rain was forecast for the week prior to the race with Epsom [[clerk of the course]] Andrew Cooper saying "“There are bits and pieces of rain in the forecast for Wednesday and Thursday but by the end of the week it’ll be getting drier and a bit warmer. If we get the 5mm, I expect the going will be at or near ‘good’ for Friday and a bit faster than that for Saturday."<ref>{{cite web|last1=Cook|first1=Chris|title=Derby 2016: Biggest field in a decade will chase £1.5m prize fund|url=https://www.theguardian.com/sport/2016/may/30/derby-2016-biggest-field-in-decade-prize-fund-andrew-cooper-horse-racing|website=The Guardian|accessdate=31 May 2016}}</ref> Bookmakers odds the following day suggested an open race with no clear-cut favourite. US Army Ranger and Wings of Desire quoted at 4 to 1 joint favourites by [[Gala Coral Group|Coral]] with [[Ulysses (horse)|Ulysses]] and Cloth of Stars at 6 to 1.<ref>{{cite web|last1=Mottershead|first1=Lee|title=Host of colts vying to be sent off Derby favourite|url=http://www.racingpost.com/news/horse-racing/epsom-host-of-colts-vying-to-be-sent-off-derby-favourite/2092096/#newsArchiveTabs=last7DaysNews|website=Racing Post Bloodstock|accessdate=31 May 2016}}</ref> On Wednesday 1 June Cooper changed the going to "soft, good to soft in places" after 22mm of rain fell on Tuesday.<ref>{{cite web|title=Going now soft, good to soft in places at Epsom|url=http://www.racingpost.com/news/horse-racing/epsom-derby-epsom-now-soft-good-to-soft-in-places-for-derby-meeting/2093108/#newsArchiveTabs=last7DaysNews|website=Racing Post|accessdate=1 June 2016}}</ref>
+
+Declarations for the race were made on Thursday 2 June and Aidan O'Brien withdrew both Beacon Rock and Bravery. There were no other withdrawals and a field of sixteen declared runners was left for the 2016 Derby.<ref>{{cite web|title=Epsom Derby: Five Aidan O'Brien runners among 16-strong field|url=https://www.bbc.co.uk/sport/horse-racing/36436694|website=BBC Sport|accessdate=2 June 2016}}</ref>
+
+Early [[jockey]] plans for the race included [[Andrea Atzeni]] being booked for Michael Stoute's Ulysses on 21 May<ref>{{cite web|last1=Scully|first1=Mark|title=Atzeni thrilled to pick up Derby ride on Ulysses|url=http://www.racingpost.com/news/horse-racing/sir-michael-stoute-andrea-atzeni-epsom-atzeni-thrilled-to-pick-up-derby-ride-on-ulysses/2086565/#newsArchiveTabs=last7DaysNews|website=Racing Post|accessdate=31 May 2016}}</ref> and [[Kieren Fallon]] booked for the same trainer's Across the Stars. Fallon won the Derby in 2003 on [[Kris Kin]] for Across the Star's owner, Saeed Suhail, also trained by Stoute.<ref>{{cite web|last1=Miilnes|first1=David|title=Fallon and Stoute to team up in the Derby|url=http://www.racingpost.com/news/horse-racing/kieren-fallon-fallon-and-stoute-to-team-up-in-derby-with-across-the-stars/2088100/#newsArchiveTabs=last7DaysNews|website=Racing Post|accessdate=31 May 2016}}</ref>
+
+=== Trial races ===
+The first significant trial race for the 2016 Derby took place at [[Leopardstown Racecourse|Leopardstown]] on 10 April when a field of seven colts contested the [[Ballysax Stakes]]. The race was won by the 2/1 favourite Harzand, trained by [[Dermot Weld]]. Harzand beat [[Idaho (horse)|Idaho]] by a [[length (horse racing)|length]] and a quarter and was subsequently quoted at odds of between 16/1 and 25/1 for the Derby and his trainer stated he would be "keeping an open mind" about targets for the colt. Jockey [[Pat Smullen]] felt that Harzand was "... too big and heavy for Epsom. He is more of an Irish Derby horse and the St Leger distance would be ideal."<ref>{{cite web|title=Ballysax Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=648071&r_date=2016-4-10#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=25 April 2016}}</ref><ref>{{cite web|last1=McFadden|first1=Tony|title=Harzand storms to Ballysax success|url=http://www.racingpost.com/news/horse-racing/leopardstown-harzand-storms-to-ballysax-success/2061623/#newsArchiveTabs=last7DaysNews|website=Racing Post|accessdate=25 April 2016}}</ref>
+
+[[Epsom Downs Racecourse|Epsom]] staged the [[Investec Derby Trial]] on 20 April. Although the race is run on the same racecourse as the Derby itself and gives a free entry to the Derby for the winner, it "struggles to attract leading Derby contenders".<ref name="EpTrial">{{cite web|last1=Wood|first1=Greg|title=Gosden sets So Mi Dar on course for Oaks after Epsom Derby Trial win|url=https://www.theguardian.com/sport/2016/apr/20/so-mi-dar-the-oaks-derby-trial-epsom|website=The Guardian}}</ref> The 2016 race failed to improve this reputation as it was won by a [[filly]], So Mi Dar, whose trainer [[John Gosden]] intended to run her in the [[Epsom Oaks]]. So Mi Dar subsequently won the [[Musidora Stakes]] but was ruled out of the Oaks by injury.<ref>{{cite web|last1=Keogh|first1=Frank|title=So Mi Dar: John Gosden-trained filly to miss Oaks at Epsom|url=https://www.bbc.co.uk/sport/horse-racing/36306871|website=BBC Sport|accessdate=19 May 2016}}</ref> The favourite for the Derby Trial, Claudio Monteverdi, finished fourth and appeared uncomfortable on the Epsom track.<ref name="EpTrial" /><ref>{{cite web|title=Investec Derby Trial result|url=http://www.racingpost.com/horses/result_home.sd?race_id=647027&r_date=2016-04-20&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=25 April 2016}}</ref>
+
+On 22 April the [[Sandown Classic Trial|Bet365 Classic Trial]] was run at [[Sandown Park Racecourse|Sandown Park]]. The race saw the seasonal debut of Midterm, one of the winter favourites for the Derby, who started at odds of 8/11 for this race. Midterm, ridden by [[Ryan Moore (jockey)|Ryan Moore]], won by one and a half lengths from Algometer and his odds for the Derby were subsequently reduced to 6/1 by some [[bookmaker]]s.<ref>{{cite web|title=Sandown: Ryan Moore wins the Classic Trial on Midterm|url=https://www.bbc.co.uk/sport/horse-racing/36114652|website=BBC Sport|accessdate=28 April 2016}}</ref><ref>{{cite web|title=Bet365 Classic Trial result|url=http://www.racingpost.com/horses/result_home.sd?race_id=647206&r_date=2016-4-22#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=28 April 2016}}</ref> The horse's trainer, Sir Michael Stoute, felt that Midterm had to run well to even consider a run in the Derby and stated that the colt's next race would either be at Chester or York.<ref>{{cite web|last1=Wood|first1=Greg|title=Midterm passes his Derby Trial examination at Sandown|url=https://www.theguardian.com/sport/2016/apr/22/midterm-passes-his-derby-trial-examination-at-sandown|website=The Guardian|accessdate=28 April 2016}}</ref>
+
+[[Newmarket Racecourse]]'s Guineas Festival on 30 April and 1 May threw up three winners with possible Derby hopes. The [[2000 Guineas Stakes|2000 Guineas]] was won by [[Galileo Gold]], owned by [[Joaan bin Hamad bin Khalifa Al Thani|Sheikh Joaan Al Thani]]'s Al Shaqab Racing. Galileo Gold was quoted after the race at odds of 6 to 1 for the Derby by the bookmakers [[William Hill (bookmaker)|William Hill]] and 10 to 1 by [[Ladbrokes]].<ref>{{cite web|last1=Wood|first1=Greg|title=Frankie Dettori triumphs on Galileo Gold in Newmarket’s 2,000 Guineas|url=https://www.theguardian.com/sport/2016/apr/30/frankie-dettori-2000-guineas-galileo-gold-newmarket-aidan-obrien|website=The Guardian|accessdate=3 May 2016}}</ref><ref>{{cite web|title=2000 Guineas Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=635196&r_date=2016-04-30&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=3 May 2016}}</ref> The same afternoon's Listed [[Newmarket Stakes]] was won by [[Godolphin Racing|Godolphin]]'s [[Hawkbill]], trained by [[Charlie Appleby (racehorse trainer)|Charlie Appleby]]. Hawkbill won by a length and a quarter from Abdon with the favourite, Sky Kingdom, a further length away in third. Godolphin's racing manager, John Ferguson, said after the race that Hawkbill would be able to run over longer distances than the ten-furlong Newmarket Stakes, and that the Derby and its French equivalent the [[Prix du Jockey-Club]] were possible targets.<ref>{{cite web|title=Kitten's Joy Colt Enters The Derby Picture|url=http://www.thoroughbreddailynews.com/kittens-joy-colt-enters-the-derby-picture/|website=Thoroughbred Daily News|accessdate=5 May 2016}}</ref><ref>{{cite web|title=Newmarket Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=647785&r_date=2016-04-30&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=5 May 2016}}</ref> The third race with an impact on the Derby betting was the [[2016 1000 Guineas|1000 Guineas]], restricted to fillies, which was won by [[Minding (horse)|Minding]], owned by [[Coolmore Stud|Coolmore]] and trained in Ireland by [[Aidan O'Brien]]. Minding's three-and-a-half length win prompted the [[Ladbrokes]] bookmaking company to quote her at odds of 5 to 2 for the Derby "with a run", allowing gamblers to back her at those odds and have their stake refunded if she does not run in the race. O'Brien was non-commital when asked about future plans for Minding, stating that the [[Irish 1,000 Guineas]] and [[Epsom Oaks]] were also possible targets, and saying that "“Obviously [the owners] will talk about that but all those things are open to her. I suppose they’re going to talk about it and see what everyone wants to do.”<ref>{{cite web|last1=Cook|first1=Chris| title=Minding’s 1,000 Guineas superiority prompts talk of gatecrashing Derby |url=https://www.theguardian.com/sport/2016/may/01/minding-1000-guineas-derby-aidan-obrien-ryan-moore-newmarket-horse-racing|website=The Guardian|accessdate=5 May 2016}}</ref>
+
+The first of two trials at [[Chester Racecourse|Chester]]'s May meeting was run on 5 May and was notable for the appearance of the Aidan O'Brien-trained [[US Army Ranger (horse)|US Army Ranger]], favourite for the Derby itself, if Minding's odds were overlooked. US Army Ranger was sent off at odds of 4 to 11 and won by the narrow margin of a short head from Port Douglas, also trained by O'Brien. US Army Ranger's jockey Ryan Moore felt that the colt would improve for the run, saying "He's a baby, it's only his second run and he made his debut five weeks ago – he'll learn plenty." Bookmakers reacted by increasing US Army Ranger's Derby odds to a general 5 to 1, with Midterm favourite at 7 to 2.<ref>{{cite web|title=US Army Ranger: Chester Vase won by Epsom Derby contender|url=https://www.bbc.co.uk/sport/horse-racing/36215482|website=BBC Sport|accessdate=5 May 2016}}</ref><ref>{{cite web|title=Chester Vase result|url=http://www.racingpost.com/horses/result_home.sd?race_id=648232&r_date=2016-05-05&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=5 May 2016}}</ref> The second trial of the meeting, the Dee Stakes, took place on 6 May and had little bearing on the Derby betting as the winner, Viren's Army, does not have an entry in the classic. The owners, Middleham Park Racing, said after the race "Whether he's up to something like the Derby is debatable. There's no definite plan but we'll have a chat and see what there is for him."<ref>{{cite web|last1=McFadden|first1=Tony|title=Viren's Army prevails in tough battle for Dee|url=http://www.racingpost.com/news/horse-racing/chester-virens-army-prevails-in-tough-battle-for-dee-stakes/2077072/#newsArchiveTabs=last7DaysNews|website=Racing Post|accessdate=7 May 2016}}</ref><ref>{{cite web|title=Dee Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=648244&r_date=2016-05-06&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=7 May 2016}}</ref>
+
+The [[Lingfield Derby Trial]] at [[Lingfield Park Racecourse|Lingfield Park]] on 7 May provided another trial winner with no entry in the Derby when Humphrey Bogart beat Carntop by half a length. Humphrey Bogart's owners, Chelsea Thoroughbreds, suggested after the race that they would look at paying the £75,000 required to enter the colt for the Derby with representative Richard Morecambe saying "it appears to be a weaker year" and they were "very very temped" to enter. Trainer [[Richard Hannon, Jr.]] said "We’ll sleep on it, that’s what we should say".<ref>{{cite web|last1=Cook|first1=Chris|title=Humphrey Bogart may be cast in Derby role after Lingfield trial win|url=https://www.theguardian.com/sport/2016/may/07/humphrey-bogart-derby-lingfield-trial-richard-hannon-horse-racing|website=The Guardian|accessdate=9 May 2016}}</ref><ref>{{cite web|title=Lingfield Derby Trial result|url=http://www.racingpost.com/horses/result_home.sd?race_id=648278&r_date=2016-05-07#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=9 May 2016}}</ref>
+
+The day after the Lingfield trial Leopardstown staged the [[Derrinstown Stud Derby Trial]] over 1 mile 2 furlongs. The victory went to Moonlight Magic, trained by [[Jim Bolger (racehorse trainer)|Jim Bolger]] and ridden by [[Kevin Manning (jockey)|Kevin Manning]], Moolight Magic beat Shogun by a length and a quarter and was cut to odds of 16 to 1 for the Derby. Bolger favoured a run at Epsom in his post-race comments, saying "I have to discuss it with the mentors, and arrive at a decision, but I would love to go...he’s a very versatile horse, he could operate from a mile to a mile and a half, and is a very classic horse – the dam is a half-sister to [[Galileo (horse)|Galileo]] and [[Sea The Stars]]. I’ll respect the opposition, but I won’t fear them … as usual."<ref>{{cite web|last1=Lyons|first1=Tommy|title=Moonlight Magic shines bright in Derrinstown Stud Derby Trial Stakes|url=http://www.irishexaminer.com/sport/racing/moonlight-magic-shines-bright-in-derrinstown-stud-derby-trial-stakes-398417.html|website=Irish Examiner|accessdate=9 May 2016}}</ref><ref>{{cite web|title=Derrinstown Stud Derby Trial result|url=http://www.racingpost.com/horses/result_home.sd?race_id=650393&r_date=2016-5-8#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=9 May 2016}}</ref>
+
+Sunday 8 May also saw a major trial race in France, the [[Prix Greffulhe]] at [[Saint-Cloud Racecourse|Saint-Cloud]]. [[Godolphin Racing]]'s Cloth Of Stars, trained by [[André Fabre]] won by two and a half lengths from Robin Of Navan. Cloth Of Stars is not entered for the Derby but Godolphin's chief executive John Ferguson stated that they would be willing to enter the colt at the supplementary stage, saying "We now know that the Prix du Jockey Club is a serious possibility, but there is also Epsom so we’ll see how he trains between now and then”.<ref>{{cite web|title=Sea the Stars’ Cloth of Stars Takes the Greffulhe|url=http://www.thoroughbreddailynews.com/sea-the-stars-cloth-of-stars-takes-the-greffulhe/|website=Thoroughbred Daily News|accessdate=11 May 2016}}</ref><ref>{{cite web|title=Prix Greffulhe result|url=http://www.racingpost.com/horses/result_home.sd?race_id=650965&r_date=2016-5-8#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=11 May 2016}}</ref>
+
+[[York Racecourse|York]]'s [[Dante Stakes]] took place on 12 May with Midterm sent off as favourite. The race resulted in a win for [[Wings Of Desire (horse)|Wings Of Desire]], trained by John Gosden and ridden by [[Frankie Dettori]], with Midterm unplaced. The winner was quoted at odds of around 4 to 1 for the Derby, alongside US Army Ranger, after the win and Gosden indicated that Wings Of Desire would be entered for the Derby at the supplementary stage, saying that "he showed me things early on, I thought 'goodness'. he's so laid back". Deauville finished as runner-up and is an intended runner in the Prix du Jockey-Club.<ref>{{cite web|title=Dante Stakes: Wings Of Desire wins at York under Frankie Dettori|url=https://www.bbc.co.uk/sport/horse-racing/36274975|website=BBC Sport|accessdate=13 May 2016}}</ref><ref>{{cite web|title=Dante Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=645972&r_date=2016-05-12&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=13 May 2016}}</ref> Midterm was subsequently found to be suffering a [[hamstring]] injury after the race, and a further scan showed a stress fracture of the pelvis. This injury led to him being ruled out of the Derby on 20 May.<ref>{{cite web|last1=Wood|first1=Greg|title=Midterm ruled out of the Derby with a stress fracture of the pelvis|url=https://www.theguardian.com/sport/2016/may/20/midterm-ruled-out-derby-pelvis-stress-fracture|website=The Guardian|accessdate=24 May 2016}}</ref>
+
+Two French races with a possible bearing on the Epsom Derby were run on Sunday 15 May. The [[Poule d'Essai des Poulains]] is France's equivalent of the [[2000 Guineas Stakes|2000 Guineas]] and was run at [[Deauville-La Touques Racecourse|Deauville]] as the regular venue at [[Longchamp Racecourse|Longchamp]] is closed for redevelopment during 2016. The race was won by Aidan O'Brien's runner, [[The Gurkha]], ridden by Ryan Moore. The Ghurka won by five and a half lengths and his Derby odds were reduced from 20 to 1 to 6 to 1 after his victory. O'Brien did not immediately confirm that the colt would run at Epsom, saying after the race "“He has three options now: the St James’s Palace, the French Derby and the Epsom Derby”.<ref>{{cite web|last1=Cook|first1=Chris|title=Derby beckons after Aidan O’Brien’s The Gurkha puts rivals to the sword|url=https://www.theguardian.com/sport/2016/may/15/derby-aidan-obrien-the-gurkha-ryan-moore-deauville-2000-guineas-michael-stoute-ulysses-horse-racing|website=The Guardian|accessdate=19 May 2016}}</ref><ref>{{cite web|title=Poule d'Essai des Poulains result|url=http://www.racingpost.com/horses/result_home.sd?race_id=651515&r_date=2016-5-15#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=19 May 2016}}</ref> The [[Prix Hocquart]] at the same Deauville meeting went to Mekhtaal, trained by [[Jean-Claude Rouget]] and ridden by Gregory Benoist. Harry Herbert, racing advisor to Mekhtaal's owner Al-Shaqab Racing, said afterwards “I think we will probably go for the Prix du Jockey Club with him and keep him in France."<ref>{{cite web|title=Mekhtaal Likely For Jockey Club|url=http://www.thoroughbreddailynews.com/mekhtaal-likely-for-jockey-club/|website=Thoroughbred Daily News|accessdate=24 May 2016}}</ref><ref>{{cite web|title=Prix Hocquart|url=http://www.racingpost.com/horses/result_home.sd?race_id=651546&r_date=2016-05-15&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=24 May 2016}}</ref>
+
+On 20 May Goodwood staged the [[Cocked Hat Stakes]] over 1 mile and 3 furlongs. The race was won by Algometer, who had finished second to Midterm in the Bet365 Classic Trial in April. Algometer, ridden by Jim Crowley won by half a length from the favourite, Prize Money, and was available at odds of between 25 to 1 and 33 to 1 for the Derby. The colt looked an unlikely runner at Epsom as trainer David Simcock believed he would need soft [[going (horse racing)|going]] to be able to run. Simcock identified the [[Irish Derby]] and [[St Leger Stakes|St Leger]] in September as Algometer's targets, stating "If it rained at Epsom we might think about it, but, realistically, the Leger is the right race for him later in the year. If it doesn't rain at Epsom we'll leave it and go to [the Irish Derby]."<ref>{{cite web|title=Algometer stakes Epsom claim with Goodwood victory|url=http://www.skysports.com/racing/race-report/10289245/ebf-stallions-cocked-hat-stakes|website=Sky Sports|accessdate=24 May 2016}}</ref><ref>{{cite web|title=Cocked Hat Stakes result|url=http://www.racingpost.com/horses/result_home.sd?race_id=649493&r_date=2016-05-20&popup=yes#results_top_tabs=re_&results_bottom_tabs=ANALYSIS|website=Racing Post|accessdate=24 May 2016}}</ref>
+
+=== Final entries ===
+The final supplementary entry stage on 30 May saw four owners paying £75,000 each to enter their horses in the race. The supplementary entries were Wings of Desire, Cloth of Stars, Humphrey Bogart and Red Verdon.<ref>{{cite web|url=http://www.racingpost.com/news/horse-racing/wings-of-desire-one-of-four-added-to-derby-as-18-remain/2091680/#newsArchiveTabs=last7DaysNews|title=Wings Of Desire one of four added to Derby as 18 remain|date=30 May 2016|author=David Baxter|publisher=Racing Post}}</ref> Two days before the race the Ballydoyle stable withdrew Beacon Rock and Bravery to leave a final field of sixteen.
+
+===Race===
+US Army Ranger started the 7/2 favourite ahead of Wings of Desire on 6/1 and Harzand at 13/2 whilst Cloth of Stars and Ulysses shared fourth place in the betting on 8/1. Port Douglas went to the front from the start and set the pace in the early stages. Moonlight Magic, Cloth of Stars and Massaat were close behind with Harzand. Ulysses and Idaho in mid-division and US Army Ranger and Wings of Desire. Port Douglas led the field into the straight ahead of Cloth of Stars, Massaat, Moonlight Magic and Idaho. The leaders began to struggle approaching the final quarter mile and Idaho went to the front with Harzand emerging as his main challenger as US Army Ranger began to make rapid progress on the wide outside.<ref>{{citeweb|url=https://www.theguardian.com/sport/live/2016/jun/04/the-derby-2016-live|title= Harzand wins the 2016 Derby – as it happened|date=4 June 2016|work=Guardian|accessdate=7 June 2016}}</ref>	
+Harzand gained the advantage approaching the final furlong and repelled a sustained challenge from US Army Ranger to win by one and a half lengths. Idaho took third place, five lengths ahead of Wings of Desire in fourth.<ref>{{cite web|url=https://www.racingpost.com/results/17/epsom/2016-06-04/614446|title=Epsom Derby result|date=4 June 2016|publisher=Racing Post}}</ref><ref>{{cite web|url=https://www.telegraph.co.uk/racing/2016/06/04/epsom-derby-2016-harzand-shakes-off-pre-race-drama-to-seal-glory/|title=Epsom Derby 2016: Harzand shakes off pre-race drama to seal glory|author=[[Marcus Armytage]]|publisher=[[Daily Telegraph]]}}</ref>
+
+== Race card ==
+{| class="wikitable sortable"
+|-
+!'''No'''
+!'''Draw'''
+!'''Horse'''
+!'''Weight ([[Stone (unit)|st]]–[[Pound (mass)|lb]])'''
+!'''Jockey'''
+!'''[[Horse trainer|Trainer]]'''
+!'''Owner'''
+|-
+| 1
+| 6
+| Across The Stars <small>(IRE)</small>
+| 9–0
+| [[Kieren Fallon]]
+| [[Michael Stoute|Sir Michael Stoute]]
+| Saeed Suhail
+|-
+| 2
+| 4
+| Algometer
+| 9–0
+| [[Jim Crowley (jockey)|Jim Crowley]]
+| David Simcock
+| [[Kirsten Rausing]]
+|-
+| 3
+| 7
+| Biodynamic 
+| 9–0
+| [[Dougie Costello]]
+| Karl Burke
+| Hubert John Strecker
+|-
+| 4
+| 14
+| [[Cloth of Stars]] <small>(IRE)</small>
+| 9–0
+| [[Mickael Barzalona]]
+| [[André Fabre]] <small>(FR)</small>
+| [[Godolphin Racing|Godolphin]]
+|-
+| 5
+| 12
+| Deauville <small>(IRE)</small>
+| 9–0
+| [[Jamie Spencer]]
+| [[Aidan O'Brien]] <small>(IRE)</small>
+| [[Michael Tabor|Tabor]] / Smith / [[John Magnier|Magnier]] / Hay
+|-
+| 6
+| 9
+| [[Harzand (horse)|Harzand]] <small>(IRE)</small>
+| 9–0
+| [[Pat Smullen]]
+| [[Dermot Weld]] <small>(IRE)</small>
+| [[Aga Khan IV|HH Aga Khan]]
+|-
+| 7
+| 2
+| Humphrey Bogart <small>(IRE)</small>
+| 9–0
+| Sean Levey
+| [[Richard Hannon Jr.]]
+| Chelsea Thoroughbreds – Saint Tropez 
+|-
+| 8
+| 8
+| [[Idaho (horse)|Idaho]] <small>(IRE)</small>
+| 9–0
+| [[Seamie Heffernan]]
+| [[Aidan O'Brien]] <small>(IRE)</small>
+| [[Michael Tabor|Tabor]] / Smith / [[John Magnier|Magnier]]
+|-
+| 9
+| 11
+| Massaat <small>(IRE)</small>
+| 9–0
+| [[Paul Hanagan]]
+| Owen Burrows
+| [[Hamdan bin Rashid Al Maktoum|Hamdan Al Maktoum]]
+|-
+| 10
+| 1
+| Moonlight Magic
+| 9–0
+| [[Kevin Manning (jockey)|Kevin Manning]]
+| [[Jim Bolger (racehorse trainer)|Jim Bolger]] <small>(IRE)</small>
+| [[Godolphin Racing|Godolphin]]
+|-
+| 11
+| 10
+| Port Douglas <small>(IRE)</small>
+| 9–0
+| [[Colm O'Donoghue]]
+| [[Aidan O'Brien]] <small>(IRE)</small>
+| [[Michael Tabor|Tabor]] / Smith / [[John Magnier|Magnier]]
+|-
+| 12
+| 16
+| Red Verdon
+| 9–0
+| [[Silvestre de Sousa]]
+| [[Ed Dunlop]]
+| [[Ronald Arculli]] 
+|-
+| 13
+| 5
+| Shogun <small>(IRE)</small>
+| 9–0
+| [[Donnacha O'Brien]]
+| [[Aidan O'Brien]] <small>(IRE)</small>
+| [[Michael Tabor|Tabor]] / Smith / [[John Magnier|Magnier]] / O'Brien
+|-
+| 14
+| 3
+| [[Ulysses (horse)|Ulysses]] <small>(IRE)</small>
+| 9–0
+| [[Andrea Atzeni]]
+| [[Michael Stoute|Sir Michael Stoute]]
+| [[Flaxman Holdings]]
+|-
+| 15
+| 15
+| [[US Army Ranger (horse)|US Army Ranger]] <small>(IRE)</small>
+| 9–0
+| [[Ryan Moore (jockey)|Ryan Moore]]
+| [[Aidan O'Brien]] <small>(IRE)</small>
+| [[Michael Tabor|Tabor]] / Smith / [[John Magnier|Magnier]]
+|-
+| 16
+| 13
+| [[Wings of Desire (horse)|Wings of Desire]]
+| 9–0
+| [[Frankie Dettori]]
+| [[John Gosden]]
+| [[Anthony Bamford|Carole, Lady Bamford]]
+|}
+
+<span style="font-size:85%"> Trainers are based in Great Britain unless indicated.</span>
+
+==Full result==
+{| class="wikitable"
+|-  style="background:#7d7; text-align:center;"
+| style="width:35px;"|
+| style="width:45px;"| '''Dist *'''
+| style="width:160px;"| '''Horse'''
+| style="width:160px;"| '''Jockey'''
+| style="width:200px;"| '''Trainer'''
+| style="width:80px;"| '''[[Starting price|SP]]'''
+|-
+|'''1'''
+|
+| [[Harzand (horse)|Harzand]]
+| [[Pat Smullen]]
+| [[Dermot Weld]] (IRE)
+| 13/2
+|-
+|'''2'''
+| 1½
+| [[US Army Ranger (horse)|US Army Ranger]] 
+| [[Ryan Moore (jockey)|Ryan Moore]]
+| [[Aidan O'Brien]] (IRE)
+| 7/2F
+|-
+|'''3'''
+| 1¼
+| [[Idaho (horse)|Idaho]]
+| [[Seamie Heffernan]]
+| [[Aidan O'Brien]] (IRE)
+| 14/1
+|-
+|'''4'''
+| 5
+| [[Wings of Desire (horse)|Wings of Desire]]
+| [[Frankie Dettori]]
+| [[John Gosden]]
+| 6/1
+|-
+|'''5'''
+| 3
+| Humphrey Bogart
+| Sean Levey
+| [[Richard Hannon Jr.]]
+| 25/1
+|-
+|'''6'''
+| 1
+| Red Verdon
+| [[Silvestre de Sousa]]
+| [[Ed Dunlop]]
+| 20/1
+|-
+|'''7'''
+| 2
+| Algometer
+| [[Jim Crowley (jockey)|Jim Crowley]]
+| David Simcock
+| 33/1
+|-
+|'''8'''
+| 2
+| [[Cloth of Stars]]
+| [[Mickael Barzalona]]
+| [[André Fabre]] (FR)
+| 8/1
+|-
+|'''9'''
+| nse
+| Massaat
+| [[Paul Hanagan]]
+| Owen Burrows
+| 11/1
+|-
+|'''10'''
+| 3
+| Across The Stars
+| [[Kieren Fallon]]
+| [[Michael Stoute]]
+| 25/1
+|-
+|'''11'''
+| 3
+| Deauville
+| [[Jamie Spencer]]
+| [[Aidan O'Brien]] (IRE)
+| 14/1
+|-
+|'''12'''
+| 1¼
+| [[Ulysses (horse)|Ulysses]]
+| [[Andrea Atzeni]]
+| [[Michael Stoute]]
+| 8/1
+|-
+|'''13'''
+| 6
+| Biodynamic
+| [[Dougie Costello]]
+| Karl Burke
+| 100/1
+|-
+|'''14'''
+| 7
+| Port Douglas
+| [[Colm O'Donoghue]]
+| [[Aidan O'Brien]] (IRE)
+| 16/1
+|-
+|'''15'''
+| 7
+| Shogun
+| [[Donnacha O'Brien]]
+| [[Aidan O'Brien]] (IRE)
+| 33/1
+|-
+|'''16'''
+| 11
+| Moonlight Magic
+| [[Kevin Manning (jockey)|Kevin Manning]]
+| [[Jim Bolger (racehorse trainer)|Jim Bolger]] (IRE)
+| 14/1 
+|}
+
+<span style="font-size:85%">* The distances between the horses are shown in [[Horse length|lengths]] or shorter; '''nse''' = nose; '''hd''' = head.<br>† Trainers are based in Great Britain unless indicated.</span>
+
+== Form analysis ==
+=== Two-year-old races ===
+Notable runs by the future Derby participants as two-year-olds in 2015:
+<div style="font-size:85%">
+* '''Cloth of Stars''' – ''1st in [[Prix des Chênes]], 3rd in [[Prix de Condé]], 2nd in [[Critérium de Saint-Cloud]]''<ref name="Cloth">{{cite web|title=Cloth Of Stars|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=890688#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=8 May 2016}}</ref>
+* '''Deauville''' – ''1st in [[Tyros Stakes]], 2nd in [[Royal Lodge Stakes]], 5th in [[Racing Post Trophy]]''<ref name="Deauville">{{cite web|title=Deauville|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=890342#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Humphrey Bogart''' – ''4th in [[Acomb Stakes]], 4th in Royal Lodge Stakes''<ref name="Humphrey">{{cite web|title=Humphrey Bogart|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=881378#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=9 May 2016}}</ref>
+* '''Idaho''' – ''4th in Critérium de Saint-Cloud''<ref name="Idaho">{{cite web|title=Idaho|url=http://www.racingpost.com/horses/horse_home.sd?race_id=614446&r_date=2016-06-04&horse_id=895122#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=31 May 2016}}</ref>
+* '''Massaat''' – ''2nd in [[Dewhurst Stakes]]''<ref name="Massaat">{{cite web|title=Massaat|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=875004#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Moonlight Magic''' – ''1st in [[Eyrefield Stakes]]''<ref name="Moonlight">{{cite web|title=Moonlight Magic|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=891337#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=8 May 2016}}</ref>
+* '''Port Douglas''' – ''4th in Canford Cliffs Stakes, 1st in [[Beresford Stakes]], 4th in Racing Post Trophy''<ref name="Port">{{cite web|title=Port Douglas|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=890342#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Shogun''' – ''3rd in [[Futurity Stakes (Ireland)|Futurity Stakes]], 6th in [[Prix Jean-Luc Lagardère]], 10th in [[Breeders' Cup Juvenile Turf]]''<ref name="Shogun">{{cite web|title=Shogun|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=886378#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+</div>
+
+=== Road to Epsom ===
+Early-season appearances in 2016 and [[Trial races for the Epsom Derby|trial races]] prior to running in the Derby:
+<div style="font-size:85%">
+* '''Across The Stars''' – ''3rd in [[Lingfield Derby Trial]]''<ref>{{cite web|title=Across The Stars|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=875363#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Algometer''' – ''2nd in [[Sandown Classic Trial|Bet365 Classic Trial]], 1st in [[Cocked Hat Stakes]]''<ref>{{cite web|title=Algometer|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=895107#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Biodynamic''' – ''4th in [[Chester Vase]]''<ref>{{cite web|title=Biodynamic|url=http://www.racingpost.com/horses/horse_home.sd?race_id=614446&r_date=2016-06-04&horse_id=881138#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=31 May 2016}}</ref>
+* '''Cloth Of Stars''' – ''1st in [[Prix La Force]], 1st in [[Prix Greffulhe]]''<ref name="Cloth"/>
+* '''Deauville''' – ''2nd in [[Dante Stakes]]''<ref name="Deauville"/>
+* '''Harzand''' – ''1st in [[Ballysax Stakes]]''<ref>{{cite web|title=Harzand|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=897418#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=24 May 2016}}</ref>
+* '''Humphrey Bogart''' – ''1st in Lingfield Derby Trial''<ref name="Humphrey" />
+* '''Idaho''' – ''2nd in Ballysax Stakes, 3rd in [[Derrinstown Stud Derby Trial]]''<ref name="Idaho" />
+* '''Massaat''' – ''2nd in [[2000 Guineas Stakes]]''<ref name="Massaat" />
+* '''Moonlight Magic''' – ''5th in Ballysax Stakes, 1st in Derrinstown Stud Derby Trial''<ref name="Moonlight" />
+* '''Port Douglas''' – ''2nd in Chester Vase''<ref name="Port" />
+* '''Shogun''' – ''2nd in Derrinstown Stud Derby Trial''<ref name="Shogun" />
+* '''[[US Army Ranger (horse)|US Army Ranger]]''' – ''1st in Chester Vase''<ref>{{cite web|title=US Army Ranger|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=891359#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=5 May 2016}}</ref>
+* '''[[Wings Of Desire (horse)|Wings Of Desire]]''' – ''1st in Dante Stakes<ref>{{cite web|title=WIngs of Desire|url=http://www.racingpost.com/horses/horse_home.sd?horse_id=875174#topHorseTabs=horse_race_record&bottomHorseTabs=horse_form|website=Racing Post|accessdate=12 May 2016}}</ref>
+</div>
+
+===Subsequent Group 1 wins===
+Group 1 / Grade I victories after running in the Derby:
+<div style="font-size:85%">
+* '''Cloth of Stars''' – ''[[Prix Ganay]] (2017)''
+* '''Harzand''' – ''[[Irish Derby]] (2016)''
+* '''Deauville''' – ''[[Belmont Derby]] (2016)''
+* '''Ulysses''' – ''[[Eclipse Stakes]] (2017), [[International Stakes]] (2017)''
+</div>
+
+==References==
+{{Reflist|30em}}
+
+{{Epsom Derby}}
+
+[[Category:2016 in horse racing|Epsom Derby]]
+[[Category:2016 in British sport|Epsom Derby]]
+[[Category:2016 in English sport|Epsom Derby]]
+[[Category:Epsom Derby| 2016]]
+[[Category:2010s in Surrey]]
+[[Category:June 2016 sports events in the United Kingdom|Epsom Derby]]

@@ -21,7 +21,17 @@ SELECT
         ELSE 1 
         END                                 AS page_exists
 FROM(
-    SELECT *
+    SELECT
+      parentPageId,
+      parentRevisionId,
+      parentHeaderId,
+      elementId,
+      destination  AS destination,
+      TRIM(UPPER(REPLACE(destination, '_', ' '))) AS destination_clean,
+      text,
+      linkType,
+      subType,
+      pageBookmark
     FROM links
     WHERE linkType = 'WIKIMEDIA'
     UNION ALL
@@ -31,6 +41,7 @@ FROM(
         parentHeaderId,
         elementId,
         replace(split(split(destination, '/wiki/')[1], '\\?')[0], '_', ' ') AS destination,
+        replace(split(split(destination, '/wiki/')[1], '\\?')[0], '_', ' ') AS destination_clean,
         text,
         linkType,
         subType,
@@ -42,10 +53,10 @@ FROM(
    ) lnk
 LEFT JOIN
     wkp_redirect rdr
-    ON lnk.destination = rdr.redirect_title
+    ON lnk.destination_clean = TRIM(UPPER(rdr.redirect_title))
 LEFT JOIN
     wkp_page_simple pge1
     ON  rdr.target_page_id = pge1.id
 LEFT JOIN
     wkp_page_simple pge2
-    ON  lnk.destination = pge2.title
+    ON  lnk.destination_clean = TRIM(UPPER(pge2.title))

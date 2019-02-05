@@ -5,7 +5,7 @@ SELECT
     parentRevisionId    AS parent_revision_id,	
     parentHeaderId      AS parent_header_id,
     elementId           AS element_id,	
-    tag                 AS tag,	
-    tagValue            AS tag_value
+    TRIM(tag)           AS tag,
+    TRIM(tagValue)      AS tag_value
 FROM 
     tags

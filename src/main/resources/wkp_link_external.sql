@@ -14,3 +14,6 @@ FROM
     links lnk
 WHERE
     lnk.linkType = 'EXTERNAL'
+AND NOT(
+        subType = 'en.wikipedia.org'
+    AND destination LIKE '%en.wikipedia.org/wiki/%')

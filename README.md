@@ -1,4 +1,3 @@
-(WARNING APP IS IN ALPHA)
 
 # Spark-Wiki-Parser
 Spark-Wiki-Parser is an Apache Spark based parser that is designed with researchers and data scientists in mind.  This parser is one amongst many: [Wikipedia Parsers](https://www.mediawiki.org/wiki/Alternative_parsers) What sets this parser apart?
@@ -42,12 +41,6 @@ This application reads data from the MediaWiki xml dump files.  These are BZ2 co
 ## Built With
 [Apache Spark](https://spark.apache.org/)
 
-[Maven](https://maven.apache.org/)
+[SBT](https://www.scala-sbt.org/)
 
 [Sweble WikiText](https://github.com/sweble/sweble-wikitext)
-
-## How to build
-This app was built using Apache Maven.  To compile simply download the source and execute:
-```
-mvn package
-```

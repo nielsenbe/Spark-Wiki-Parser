@@ -46,6 +46,7 @@ class WkpParserTest extends FlatSpec {
       revision)
   }
 
+
   "A WkpParser" should "produce the required element counts" in {
     val config = WkpParserConfiguration(true, true, true, true, true, true)
     val page = getCaseClass("/Test_Actual.txt")

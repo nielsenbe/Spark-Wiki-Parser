@@ -2,7 +2,7 @@ package com.github.nielsenbe.sparkwikiparser.wikipedia.sparkdbbuild
 
 import com.github.nielsenbe.sparkwikiparser.wikipedia.WikipediaPage
 import org.apache.spark.sql
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 /**
   * Workflow of steps needed to convert dump file into a spark database
@@ -20,9 +20,19 @@ class DatabaseBuildFull {
     val parser = new ParserFunctions()
     val parsedItems = parser.getWikipediaAsDataSet(spark, args)
 
-    parsedItems.write.mode("overwrite").parquet(args.destFolder + "stg/" + "cached_wkp")
+
+
+    /* High and low memory modes High caches in memory.  Low persists to disk.*/
     import spark.implicits._
-    val items = spark.read.parquet(args.destFolder + "stg/" + "cached_wkp").as[WikipediaPage]
+    val items: Dataset[WikipediaPage] = if (args.lowMemoryMode) {
+      parsedItems.write.mode("overwrite").parquet(args.destFolder + "stg/" + "cached_wkp")
+      spark.read.parquet(args.destFolder + "stg/" + "cached_wkp").as[WikipediaPage]
+    } else {
+      parsedItems.cache()
+      parsedItems.count()
+      parsedItems
+    }
+
 
     /* Print parse status */
     println("Wikitext parsing complete")

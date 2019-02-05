@@ -10,3 +10,10 @@ SELECT
     html                AS html
 FROM 
     tables
+WHERE
+    html NOT IN(
+    '<dl><dd></dd></dl>',
+    '<ul><li></li></ul>',
+    '<table></table>',
+    '<ul><li></li><li></li></ul>',
+    '<ol><li></li></ol>')

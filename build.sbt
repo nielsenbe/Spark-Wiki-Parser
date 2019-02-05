@@ -1,8 +1,26 @@
 name := "spark-wiki-parser"
 organization := "com.github.nielsenbe"
-version := "0.10"
+version := "1.0"
 description := "Parses a Wiki dump file using Spark."
 homepage := Some(url("https://github.com/nielsenbe/Spark-Wiki-Parser"))
+scmInfo := Some(ScmInfo(url("https://github.com/nielsenbe/Spark-Wiki-Parser"),
+                            "git@github.com:nielsenbe/Spark-Wiki-Parser.git"))
+developers := List(Developer(
+  "nielsenbe", 
+  "Bradley Nielsen", 
+  "brad.e.nielsen@gmail.com", 
+  url("https://github.com/nielsenbe")))
+
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+publishMavenStyle := true
+
+// Add sonatype repository settings
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
 
 scalaVersion := "2.11.12"
 

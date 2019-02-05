@@ -15,14 +15,20 @@ class ParserArguments(arguments: Seq[String]) extends ScallopConf(arguments) {
   val destFolder: ScallopOption[String] = opt[String](
     name="destloc",
     required=true,
-    descr="Path to put the database, if null then Spark default will be used.")
+    descr="Path to put folder that will house the export files.")
   val destFormat: ScallopOption[String] = opt[String](
     name="destformat",
     required=false,
     default=Some("parquet"),
-    descr="(opt)File format for DB tables.  Default is parquet.")
+    descr="(opt)File format for export file.  Default is parquet.")
+  val lowMemoryMode: ScallopOption[Boolean] = opt[Boolean](
+    name="lowmemorymode",
+    required = false,
+    default = Option(false),
+    descr="For clusters with limited memory available < 100G.  Intermediate results are saved to disk."
+  )
 
   verify()
 }
 
-case class Arguments(dumpFile: String, destFolder: String, destFormat: String)
+case class Arguments(dumpFile: String, destFolder: String, destFormat: String, lowMemoryMode: Boolean)

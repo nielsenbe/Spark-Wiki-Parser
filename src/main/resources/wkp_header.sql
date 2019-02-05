@@ -4,9 +4,9 @@ SELECT
     hdr.parentPageId    AS parent_page_id,
     hdr.parentRevisionId AS parent_revision_id,
     hdr.headerId        AS header_id,
-    hdr.title           AS title,
+    TRIM(hdr.title)     AS title,
     hdr.level           AS header_level,
-    CASE WHEN UPPER(title) IN (
+    CASE WHEN TRIM(UPPER(title)) IN (
         "REFERENCES", 
         "EXTERNAL LINKS", 
         "SEE ALSO", 

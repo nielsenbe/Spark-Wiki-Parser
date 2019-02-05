@@ -79,9 +79,13 @@ class ParserFunctions {
     * @param args Arguments supplied to program
     */
   def persistToStaging(spark: SparkSession, items: sql.DataFrame, viewName: String, args: Arguments) {
-    items.write.mode("overwrite").parquet(args.destFolder + "stg/flat/" + viewName)
-    val staged = spark.read.parquet(args.destFolder + "stg/flat/" + viewName)
-    staged.createOrReplaceTempView(viewName)
+    if(args.lowMemoryMode){
+      items.write.mode("overwrite").parquet(args.destFolder + "stg/flat/" + viewName)
+      val staged = spark.read.parquet(args.destFolder + "stg/flat/" + viewName)
+      staged.createOrReplaceTempView(viewName)
+    } else {
+      items.createOrReplaceTempView(viewName)
+    }
   }
 
 

@@ -281,7 +281,15 @@ object WkpParser {
     val pageBookmark = hashSplit lift 1 getOrElse ""
 
     // For external links, the subtype is its domain.
-    def parseURI(uri: String): Try[String] = Try(new URI(uri).getHost)
+    // java.URI only parses when URL starts with HTTP
+    def appendHTTP(uri: String): String = {
+      if (!uri.toUpperCase().startsWith("HTTP")){
+        "http://" + uri
+      } else {
+        uri
+      }
+    }
+    def parseURI(uri: String): Try[String] = Try(new URI(appendHTTP(uri)).getHost)
     val domain = parseURI(cleanDest).getOrElse("INVALID URI")
 
     List(WikipediaLink(state.pageId, state.revisionId, state.headerId, state.elementIdItr.next, cleanDest, title, "EXTERNAL", domain, pageBookmark))
