@@ -18,6 +18,7 @@ This repository doesn't have any code for the raw parsing of the Wikitext.  This
 * Template
 * Template Parameters
 * Text
+
 See our [data dictionary](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki/Parser-Wikipedia-Data-Dictionary) for more details.
 
 ## Getting Started
