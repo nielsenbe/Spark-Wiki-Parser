@@ -1,0 +1,12 @@
+spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--executor-cores [val] \
+--num-executors [val] \
+--executor-memory [val] \
+--class "com.github.nielsenbe.sparkwikiparser.wikipedia.sparkdbbuild.DatabaseBuildMain" \
+--packages com.databricks:spark-xml_2.11:0.5.0 \
+"[Spark Wiki Parser Jar Location" \
+"--dumpfile" "[Dump File Location]" \
+"--destloc" "[Export file folder]" \
+"--destformat" "[parquet, orc, csv]"

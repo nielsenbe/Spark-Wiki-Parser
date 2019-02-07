@@ -1,4 +1,3 @@
-(WARNING APP IS IN ALPHA)
 
 # Spark-Wiki-Parser
 Spark-Wiki-Parser is an Apache Spark based parser that is designed with researchers and data scientists in mind.  This parser is one amongst many: [Wikipedia Parsers](https://www.mediawiki.org/wiki/Alternative_parsers) What sets this parser apart?
@@ -7,6 +6,19 @@ Spark-Wiki-Parser is an Apache Spark based parser that is designed with research
 * Parser is accompanied by tutorials to get you started in Wikipedia research.
 
 This repository doesn't have any code for the raw parsing of the Wikitext.  This app outsources that to the [Sweble WikiText Engine](https://github.com/sweble/sweble-wikitext).  Sweble converts the Wikitext into a deeply nested tree.  The Spark-Wiki-Parser takes this tree and cleans and flattens it.
+
+## Output files
+* Redirect
+* Page
+* Header
+* External Link
+* Wiki Link
+* Table
+* Tag
+* Template
+* Template Parameters
+* Text
+See our [data dictionary](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki/Parser-Wikipedia-Data-Dictionary) for more details.
 
 ## Getting Started
 There are multiple entry points depending on your Spark provider(AWS, Azure, Databricks, or self hosted) and submit method (Spark Submit or Notebook).  See our [wiki](https://github.com/nielsenbe/Spark-Wiki-Parser/wiki) to get started.
@@ -20,7 +32,7 @@ There are multiple entry points depending on your Spark provider(AWS, Azure, Dat
 ## Requirements
 * Apache Spark cluster 
   * Version 2.0+ (Parser should work on older versions, but has only been tested in 2.0+)
-  * Recommended 40+ cores and 150+ GB RAM
+  * Recommended 40+ cores and 150+ GB RAM (For initial parse.)
   * This application will work in local / single node clusters, but may not be performant.
 * Apache Zeppelin / Jupyter / Databricks
   * Only needed if the notebooks are being utilized.
@@ -33,7 +45,6 @@ This application reads data from the MediaWiki xml dump files.  These are BZ2 co
   * Once the xml dump is converted to the flattened files then any Spark supported language can be used for analysis. (Scala, Java, Python, R, or SQL)
 * Parser only supports English wikis
   * Other languages will parse, but columns such as Main Article might not work.
-* Has yet to be loaded into a central repository such as Maven.
 * Parsing < ref > tags can be slow.
   * Sweble does not have logic for pulling out citation templates from a < ref > tag.
   * Reparsing the tag contents will increase overall execution time.
@@ -42,12 +53,6 @@ This application reads data from the MediaWiki xml dump files.  These are BZ2 co
 ## Built With
 [Apache Spark](https://spark.apache.org/)
 
-[Maven](https://maven.apache.org/)
+[SBT](https://www.scala-sbt.org/)
 
 [Sweble WikiText](https://github.com/sweble/sweble-wikitext)
-
-## How to build
-This app was built using Apache Maven.  To compile simply download the source and execute:
-```
-mvn package
-```

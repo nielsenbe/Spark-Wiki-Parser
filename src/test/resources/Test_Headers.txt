@@ -1,0 +1,11 @@
+Lead Text
+==HEADER2==
+Header 2 Text
+===HEADER3===
+{{Main article|Albedo}}
+Header 3  Text
+====HEADER4====
+Header 4 Text
+==References==
+Reference Text
+=={{templateinheader}}HEADER5==
